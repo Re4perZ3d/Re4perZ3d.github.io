@@ -11,7 +11,7 @@ enableRobotsTXT = true
   status = "Open to a PFE / internship in Germany (2028)"
   github = "https://github.com/Re4perZ3d"
   linkedin = "https://www.linkedin.com/in/mohamed-bayrem-bane-5883b1250/"
-  hackthebox = ""        # paste your HTB profile URL
+  hackthebox = "https://app.hackthebox.com/users/1720033"      # paste your HTB profile URL
   email = ""             # optional public email
   resume = "/resume.pdf" # put the file in static/resume.pdf
 
