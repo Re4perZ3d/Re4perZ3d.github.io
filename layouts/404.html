@@ -1,0 +1,5 @@
+{{ define "main" }}
+<p class="cmd">{{ partial "prompt.html" "~" }}cat this-page</p>
+<h1>No such file or directory</h1>
+<p class="prose">This page doesn't exist. Go back <a href="{{ "/" | relURL }}">home</a> or type <code>ls</code> in the terminal below.</p>
+{{ end }}

@@ -1,0 +1,23 @@
+<footer class="footer">
+  <form class="term" id="term" autocomplete="off" aria-label="Interactive terminal">
+    <div class="term-out" id="term-out" aria-live="polite"></div>
+    <label class="term-line">
+      {{ partial "prompt.html" "~" }}
+      <input id="term-in" type="text" spellcheck="false" aria-label="Type a command, try help" placeholder="type 'help'">
+    </label>
+  </form>
+  <script type="application/json" id="term-data">
+    {{- $pages := slice -}}
+    {{- range site.RegularPages -}}
+      {{- $pages = $pages | append (dict "title" .Title "url" .RelPermalink "section" .Section) -}}
+    {{- end -}}
+    {{- dict "pages" $pages "github" site.Params.github "linkedin" site.Params.linkedin "htb" site.Params.hackthebox "resume" (site.Params.resume | relURL) "name" site.Params.name | jsonify | safeJS -}}
+  </script>
+  <p class="links">
+    {{ with site.Params.github }}<a href="{{ . }}" rel="me">github</a>{{ end }}
+    {{ with site.Params.linkedin }}<a href="{{ . }}" rel="me">linkedin</a>{{ end }}
+    {{ with site.Params.hackthebox }}<a href="{{ . }}" rel="me">hackthebox</a>{{ end }}
+    {{ with site.Params.email }}<a href="mailto:{{ . }}">email</a>{{ end }}
+    <a href="{{ "index.xml" | relURL }}">rss</a>
+  </p>
+</footer>

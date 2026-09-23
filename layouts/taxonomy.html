@@ -1,0 +1,5 @@
+{{ define "main" }}
+<p class="cmd">{{ partial "prompt.html" "~/tags" }}ls</p>
+<h1>Tags</h1>
+<ul class="chips">{{ range .Data.Terms.ByCount }}<li><a class="chip" href="{{ .Page.RelPermalink }}">#{{ .Page.Title }} ({{ .Count }})</a></li>{{ end }}</ul>
+{{ end }}

@@ -1,0 +1,18 @@
+{{ define "main" }}
+<article>
+  <p class="cmd">{{ partial "prompt.html" (printf "~/%s" .Section) }}cat {{ .File.ContentBaseName }}.md</p>
+  <header class="post-head">
+    <h1>{{ .Title }}</h1>
+    <p class="meta">
+      {{ if .Params.side }}{{ partial "side.html" . }}{{ end }}
+      {{ if not .Date.IsZero }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>{{ end }}
+      {{ if gt .ReadingTime 1 }}<span>{{ .ReadingTime }} min read</span>{{ end }}
+    </p>
+    {{ with .Params.tags }}<ul class="tags">{{ range . }}<li><a href="{{ (printf "/tags/%s/" (. | urlize)) | relURL }}">#{{ . }}</a></li>{{ end }}</ul>{{ end }}
+  </header>
+  {{ if and (gt .WordCount 400) (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") }}
+  <details class="toc"><summary>contents</summary>{{ .TableOfContents }}</details>
+  {{ end }}
+  <div class="prose">{{ .Content }}</div>
+</article>
+{{ end }}

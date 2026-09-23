@@ -1,0 +1,5 @@
+{{ define "main" }}
+<p class="cmd">{{ partial "prompt.html" "~" }}grep -rl "#{{ .Title }}"</p>
+<h1>#{{ .Title }}</h1>
+<ul class="ls">{{ range .Pages }}{{ partial "row.html" . }}{{ end }}</ul>
+{{ end }}

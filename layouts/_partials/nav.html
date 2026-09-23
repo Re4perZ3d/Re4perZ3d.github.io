@@ -1,0 +1,12 @@
+<header class="topbar">
+  <a class="brand" href="{{ "/" | relURL }}">{{ partial "prompt.html" "~" }}</a>
+  <nav aria-label="Main">
+    <ul>
+      {{ $current := . }}
+      {{ range site.Menus.main }}
+      <li><a href="{{ .URL }}"{{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+      {{ end }}
+      {{ with site.Params.resume }}<li><a class="resume" href="{{ . | relURL }}">resume.pdf</a></li>{{ end }}
+    </ul>
+  </nav>
+</header>

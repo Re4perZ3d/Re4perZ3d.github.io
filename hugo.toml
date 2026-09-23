@@ -1,0 +1,56 @@
+baseURL = "https://re4perz3d.github.io/"
+locale = "en"
+title = "Re4perZ3d"
+enableRobotsTXT = true
+
+[params]
+  name = "Mohamed Bayrem Bane"
+  handle = "reaper"
+  host = "re4perz3d"
+  description = "SOC Analyst, offensive security and purple team. Writeups, research and cheat sheets by Re4perZ3d."
+  status = "Open to a PFE / internship in Germany (2028)"
+  github = "https://github.com/Re4perZ3d"
+  linkedin = "https://www.linkedin.com/in/mohamed-bayrem-bane-5883b1250/"
+  hackthebox = ""        # paste your HTB profile URL
+  email = ""             # optional public email
+  resume = "/resume.pdf" # put the file in static/resume.pdf
+
+[menus]
+  [[menus.main]]
+    name = "~/whoami"
+    pageRef = "/whoami"
+    weight = 1
+  [[menus.main]]
+    name = "~/writeups"
+    pageRef = "/writeups"
+    weight = 2
+  [[menus.main]]
+    name = "~/research"
+    pageRef = "/research"
+    weight = 3
+  [[menus.main]]
+    name = "~/projects"
+    pageRef = "/projects"
+    weight = 4
+  [[menus.main]]
+    name = "~/certs"
+    pageRef = "/certs"
+    weight = 5
+  [[menus.main]]
+    name = "~/cheatsheets"
+    pageRef = "/cheatsheets"
+    weight = 6
+
+[markup]
+  [markup.highlight]
+    style = "tokyonight-night"
+    noClasses = true
+    lineNos = false
+  [markup.goldmark.renderer]
+    unsafe = false
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+
+[taxonomies]
+  tag = "tags"

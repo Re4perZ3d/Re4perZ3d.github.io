@@ -1,0 +1,15 @@
+# Update these whenever your HTB profile changes
+htb:
+  - { key: "rank",       value: "Prodigy", color: "green" }
+  - { key: "level",      value: "78",      color: "green" }
+  - { key: "machines",   value: "41",      color: "cyan" }
+  - { key: "sherlocks",  value: "50",      color: "cyan" }
+  - { key: "challenges", value: "66",      color: "cyan" }
+  - { key: "season 9",   value: "Ruby",    color: "red" }
+
+certs:
+  - { name: "CRTP",           side: "purple", year: "2026" }
+  - { name: "eCPPTv3",        side: "red",    year: "2026" }
+  - { name: "eJPTv3",         side: "red",    year: "2025" }
+  - { name: "CTI Foundation", side: "blue",   year: "2025" }
+  - { name: "CCNA 1–3",       side: "blue",   year: "2024" }
