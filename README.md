@@ -38,3 +38,9 @@ Install Hugo extended, then `hugo server` and open http://localhost:1313
 - HTB: retired machines/Sherlocks only.
 - No employer or client data.
 - No certification exam or course-lab content.
+
+## Personalize
+
+- The emblem/favicon live in `static/img/` (`icon-512.png`, `favicon.png`). Swap them to change the logo.
+- CTF photos: drop images into `static/img/ctf/` and replace the placeholder `<figure>`s in `layouts/home.html`.
+- Certs, CTF wins and HTB stats are data — edit `data/stats.yaml`. Projects shown on the home page: `data/projects.yaml`.

@@ -7,13 +7,13 @@ enableRobotsTXT = true
   name = "Mohamed Bayrem Bane"
   handle = "reaper"
   host = "re4perz3d"
-  description = "SOC Analyst, offensive security and purple team. Writeups, research and cheat sheets by Re4perZ3d."
-  status = "Open to a PFE / internship in Germany (2028)"
+  tagline = "Investigate the attack. Then run it."
+  description = "SOC analyst and offensive-security practitioner. Writeups, research, projects and cheat sheets by Re4perZ3d."
   github = "https://github.com/Re4perZ3d"
   linkedin = "https://www.linkedin.com/in/mohamed-bayrem-bane-5883b1250/"
-  hackthebox = "https://app.hackthebox.com/users/1720033"      # paste your HTB profile URL
-  email = ""             # optional public email
-  resume = "/resume.pdf" # put the file in static/resume.pdf
+  hackthebox = "https://app.hackthebox.com/users/1720033"
+  email = "medbayrembane@gmail.com"
+  resume = "/resume.pdf"
 
 [menus]
   [[menus.main]]
@@ -47,7 +47,7 @@ enableRobotsTXT = true
     noClasses = true
     lineNos = false
   [markup.goldmark.renderer]
-    unsafe = false
+    unsafe = true
   [markup.tableOfContents]
     startLevel = 2
     endLevel = 3

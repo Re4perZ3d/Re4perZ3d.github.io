@@ -1,0 +1,18 @@
+# Featured projects shown on the home page
+- title: "Defensy — AI-assisted vulnerability validation & purple team"
+  slug: "vuln-validation-pipeline"
+  role: "Supervisor (encadrant)"
+  year: "2026"
+  side: "purple"
+  blurb: "An autonomous pipeline that takes a CVE all the way to an evidence-based verdict: exact asset matching, reachability analysis, controlled exploitation in an isolated lab, and Wazuh detection validation — every trust boundary gated by human approval."
+  stack: ["NVD", "CISA KEV", "OSV.dev", "Gemini", "OpenAI", "Wazuh", "Python"]
+  repo: "https://github.com/baha0x13/continuous-adversary"
+
+- title: "Improving Threat Intelligence in a SOC"
+  slug: "soc-threat-intel-platform"
+  role: "Final-year project (ANCS)"
+  year: "2025"
+  side: "intel"
+  blurb: "An open-source SOC that automates the path from alert to context: Wazuh detects, Shuffle orchestrates, OpenCTI enriches from OTX and VirusTotal, and a local Mistral 7B writes the incident report — all surfaced in a custom Next.js dashboard I built."
+  stack: ["Wazuh", "Shuffle", "OpenCTI", "Mistral 7B", "FastAPI", "Next.js"]
+  repo: ""

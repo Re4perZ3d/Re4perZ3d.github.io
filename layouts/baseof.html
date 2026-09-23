@@ -8,16 +8,19 @@
   <meta property="og:title" content="{{ .Title }}">
   <meta property="og:description" content="{{ with .Params.summary }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+  <meta property="og:image" content="{{ "img/icon-512.png" | absURL }}">
+  <link rel="icon" type="image/png" href="{{ "img/favicon.png" | relURL }}">
+  <link rel="apple-touch-icon" href="{{ "img/apple-touch-icon.png" | relURL }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,800;1,400&display=swap">
   {{ with resources.Get "css/main.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
   {{ end }}
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>▮</text></svg>">
   {{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .RelPermalink }}" title="{{ site.Title }}">{{ end }}
 </head>
 <body>
+  <div class="scanlines" aria-hidden="true"></div>
   <a class="skip" href="#main">Skip to content</a>
   {{ partial "nav.html" . }}
   <main id="main">
@@ -25,5 +28,6 @@
   </main>
   {{ partial "footer.html" . }}
   <script src="{{ "js/terminal.js" | relURL }}" defer></script>
+  {{ if .IsHome }}<script src="{{ "js/hero.js" | relURL }}" defer></script>{{ end }}
 </body>
 </html>

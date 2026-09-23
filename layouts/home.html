@@ -1,38 +1,125 @@
 {{ define "main" }}
+
 <section class="hero" aria-label="Intro">
-<pre class="banner" aria-label="{{ site.Title }}">    ____       __ __                 _____  _____     __
+  <div class="hero-grid">
+    <div class="hero-left">
+      <pre class="banner" aria-label="{{ site.Title }}">    ____       __ __                 _____  _____     __
    / __ \___  / // / ____  ___  ____/__  / |__  /____/ /
   / /_/ / _ \/ // /_/ __ \/ _ \/ ___/ / /   /_ &lt;/ __  /
  / _, _/  __/__  __/ /_/ /  __/ /    / /_____/ / /_/ /
 /_/ |_|\___/  /_/ / .___/\___/_/    /____/____/\__,_/
                  /_/</pre>
-  <p class="cmd">{{ partial "prompt.html" "~" }}whoami</p>
-  <div class="out">{{ .Content }}</div>
-  {{ with site.Params.status }}<p class="status">[+] {{ . }}</p>{{ end }}
+
+      <div class="boot" aria-hidden="true"></div>
+
+      <div class="seq" data-seq>
+        <div class="seq-step" data-cmd="whoami">
+          <p class="cmd">{{ partial "prompt.html" "~" }}<span class="typed"></span></p>
+          <div class="seq-out out">
+            <p><strong>{{ site.Params.name }}</strong> — SOC analyst with a strong offensive-security side.</p>
+            <p>I investigate attacks in the SOC, then run them in the lab. The bridge between the two — attack, detect, validate, improve — is what I build toward.</p>
+          </div>
+        </div>
+        <div class="seq-step" data-cmd="cat focus.txt">
+          <p class="cmd">{{ partial "prompt.html" "~" }}<span class="typed"></span></p>
+          <div class="seq-out">
+            <ul class="chips focus">
+              <li class="chip side-blue">soc-detection</li>
+              <li class="chip side-purple">purple-team</li>
+              <li class="chip side-red">active-directory</li>
+              <li class="chip side-blue">dfir</li>
+              <li class="chip side-purple">threat-intel</li>
+            </ul>
+          </div>
+        </div>
+        <div class="seq-step" data-cmd="./run.sh">
+          <p class="cmd">{{ partial "prompt.html" "~" }}<span class="typed"></span></p>
+          <div class="seq-out">
+            <p class="status">[+] status: online — SOC &rarr; Purple &rarr; Red // always learning<span class="cursor">_</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-cta">
+        <a class="btn" href="#projects">View my work</a>
+        <a class="btn ghost" href="{{ site.Params.resume }}">resume.pdf</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <img class="emblem" src="{{ "img/icon-512.png" | relURL }}" width="360" height="360"
+           alt="Re4perZ3d emblem: a hooded figure split blue, purple and red">
+    </div>
+  </div>
 </section>
 
-<div class="grid-2">
-  <section aria-labelledby="stats-h">
-    <p class="cmd" id="stats-h"><span class="p-dim">$ </span>cat htb.stats</p>
-    <dl class="stats">
-      {{ range hugo.Data.stats.htb }}
-      <div><dt>{{ .key }}</dt><dd class="c-{{ .color }}">{{ .value }}</dd></div>
-      {{ end }}
-    </dl>
-    <p class="cmd"><span class="p-dim">$ </span>ls certs/</p>
-    <ul class="chips">
-      {{ range hugo.Data.stats.certs }}<li class="chip side-{{ .side }}">{{ .name }}</li>{{ end }}
-    </ul>
-  </section>
-
-  <section aria-labelledby="latest-h">
-    <p class="cmd" id="latest-h"><span class="p-dim">$ </span>ls -lt ~/writeups ~/research | head</p>
-    {{ $posts := where site.RegularPages "Section" "in" (slice "writeups" "research") }}
-    {{ with first 6 $posts }}
-    <ul class="ls">{{ range . }}{{ partial "row.html" . }}{{ end }}</ul>
-    {{ else }}
-    <p class="empty">Nothing here yet. Add a post with <code>hugo new writeups/my-post.md</code>.</p>
+<section id="stats" class="band" aria-label="Hack The Box stats">
+  <p class="cmd"><span class="p-dim">$ </span>cat htb.stats</p>
+  <dl class="stats big" data-count>
+    {{ range hugo.Data.stats.htb }}
+    <div><dt>{{ .key }}</dt><dd class="c-{{ .color }}">{{ .value }}</dd></div>
     {{ end }}
-  </section>
-</div>
+  </dl>
+  {{ with site.Params.hackthebox }}<p class="band-link"><a href="{{ . }}">full HTB profile &rarr;</a></p>{{ end }}
+</section>
+
+<section id="certs" class="band reveal" aria-labelledby="certs-h">
+  <p class="cmd" id="certs-h"><span class="p-dim">$ </span>ls certs/ --verify</p>
+  <div class="cards">
+    {{ range hugo.Data.stats.certs }}
+    <div class="card side-{{ .side }}">
+      <div class="card-top"><span class="card-name">{{ .name }}</span><span class="card-year">{{ .year }}</span></div>
+      <p class="card-full">{{ .full }}</p>
+      <div class="card-foot"><span class="card-issuer">{{ .issuer }}</span>{{ with .url }}<a href="{{ . }}" rel="noopener">verify &rarr;</a>{{ end }}</div>
+    </div>
+    {{ end }}
+  </div>
+</section>
+
+<section id="ctf" class="band reveal" aria-labelledby="ctf-h">
+  <p class="cmd" id="ctf-h"><span class="p-dim">$ </span>git log --oneline ~/ctf   <span class="p-dim"># team no!dea</span></p>
+  <ul class="ctf-log">
+    {{ range hugo.Data.stats.ctf }}
+    <li><span class="side-{{ .side }}">{{ .place }}</span><span class="ctf-event">{{ .event }}</span><span class="ctf-year">{{ .year }}</span></li>
+    {{ end }}
+  </ul>
+  <div class="gallery">
+    <figure class="shot placeholder"><figcaption>Drop CTF photo → static/img/ctf/</figcaption></figure>
+    <figure class="shot placeholder"><figcaption>Team win / scoreboard</figcaption></figure>
+    <figure class="shot placeholder"><figcaption>On stage / prize</figcaption></figure>
+  </div>
+</section>
+
+<section id="projects" class="band reveal" aria-labelledby="proj-h">
+  <p class="cmd" id="proj-h"><span class="p-dim">$ </span>ls -l ~/projects</p>
+  <div class="proj-grid">
+    {{ range hugo.Data.projects }}
+    <article class="proj side-{{ .side }}">
+      <div class="proj-head">
+        <a href="{{ (printf "/projects/%s/" .slug) | relURL }}"><h3>{{ .title }}</h3></a>
+        <span class="proj-year">{{ .year }}</span>
+      </div>
+      <p class="proj-role">{{ .role }}</p>
+      <p class="proj-blurb">{{ .blurb }}</p>
+      <ul class="stack">{{ range .stack }}<li>{{ . }}</li>{{ end }}</ul>
+      <div class="proj-links">
+        <a href="{{ (printf "/projects/%s/" .slug) | relURL }}">details &rarr;</a>
+        {{ with .repo }}<a href="{{ . }}" rel="noopener">repo</a>{{ end }}
+      </div>
+    </article>
+    {{ end }}
+  </div>
+</section>
+
+<section id="latest" class="band reveal" aria-labelledby="latest-h">
+  <p class="cmd" id="latest-h"><span class="p-dim">$ </span>ls -lt ~/writeups ~/research | head</p>
+  {{ $posts := where site.RegularPages "Section" "in" (slice "writeups" "research") }}
+  {{ with first 6 $posts }}
+  <ul class="ls">{{ range . }}{{ partial "row.html" . }}{{ end }}</ul>
+  {{ else }}
+  <p class="empty">Nothing here yet.</p>
+  {{ end }}
+  <p class="band-link"><a href="{{ "/writeups/" | relURL }}">all writeups &rarr;</a></p>
+</section>
+
 {{ end }}

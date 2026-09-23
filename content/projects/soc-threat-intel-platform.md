@@ -1,18 +1,24 @@
 ---
-title: "Open-source SOC with automated threat intelligence"
+title: "Improving Threat Intelligence in a SOC"
 date: 2025-06-30
 side: "intel"
-summary: "Wazuh, Shuffle and OpenCTI wired into one pipeline, with AI-generated incident reports and a custom dashboard."
-tags: ["cti", "wazuh", "automation"]
+summary: "An open-source SOC that automates alert-to-context: Wazuh, Shuffle and OpenCTI wired together, with AI-generated incident reports surfaced in a custom Next.js dashboard I built."
+tags: ["cti", "wazuh", "opencti", "automation"]
 ---
-Final-year project at ANCS / tunCERT (February – June 2025).
+Final-year project (License) at **ANCS**, 2024–2025, with Koussay Bedoui. Supervised by Mr. Chekib Hantous and Mrs. Rim Bouhouch.
 
 ## What it does
 
-Wazuh detects, Shuffle orchestrates, OpenCTI enriches alerts with threat intelligence (OTX, VirusTotal), and a local Mistral 7B model writes contextual incident reports. Everything is visualised in a custom Next.js dashboard.
+- **Wazuh** handles detection.
+- **Shuffle** orchestrates the response workflow.
+- **OpenCTI** enriches alerts with threat intelligence from OTX and VirusTotal.
+- A local **Mistral 7B** model writes contextual, real-time incident reports.
+- Everything is surfaced in a **custom Next.js dashboard** I built (dashboard, incidents, detection performance, threat intelligence and AI-generated reports views).
 
-## Why it matters
+I moved deliberately away from heavier components (TheHive, Kibana) in favour of the custom dashboard, so the analyst starts from context instead of a raw alert.
 
-It cuts manual enrichment out of alert handling, so the analyst starts from context instead of a raw alert.
+## Stack
 
-> Add: architecture diagram, 2–3 dashboard screenshots.
+Wazuh · Shuffle · OpenCTI · Mistral 7B (GGUF) · FastAPI · Next.js
+
+> Add: architecture diagram and 2–3 dashboard screenshots.
