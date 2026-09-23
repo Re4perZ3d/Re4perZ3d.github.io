@@ -236,3 +236,45 @@ main { position: relative; z-index: 2; max-width: 1180px; }
   .reveal { opacity: 1; transform: none; }
   .cursor, .seq .seq-step.active .typed::after { animation: none; }
 }
+
+/* gallery captions on real shots */
+.shot:not(.placeholder) { display: flex; flex-direction: column; aspect-ratio: auto; }
+.shot:not(.placeholder) img { aspect-ratio: 16/10; }
+.shot figcaption { font-size: .78rem; color: var(--fg-soft); padding: .5rem .6rem; background: var(--panel); border-top: 1px solid var(--line); }
+.shot.placeholder .ph-hint { color: var(--dim); font-size: .72rem; }
+
+/* ============ v4: matrix bg, emblem watermark, lightbox, term chips ============ */
+.matrix { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
+  opacity: .12; transition: opacity .8s ease; }
+.matrix.loud { opacity: .5; }
+.bg-emblem { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .05;
+  background: url("/img/icon-512.png") no-repeat center 42%;
+  background-size: min(680px, 82vw); filter: blur(1px) saturate(1.2); }
+.scanlines { z-index: 3; }
+main { z-index: 4; }
+.topbar, .footer { position: relative; z-index: 4; }
+body { background:
+  radial-gradient(1100px 600px at 78% -8%, rgba(122,162,247,.10), transparent 60%),
+  radial-gradient(900px 520px at 12% 108%, rgba(247,118,142,.08), transparent 60%),
+  var(--bg); }
+@media (prefers-reduced-motion: reduce) { .matrix { opacity: .05; } }
+
+/* lightbox */
+.lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(5,7,10,.92);
+  display: flex; align-items: center; justify-content: center; }
+.lightbox[hidden] { display: none; }
+.lb-img { max-width: 92vw; max-height: 86vh; border: 1px solid var(--line); box-shadow: 0 0 60px rgba(0,0,0,.6); }
+.lightbox button { position: absolute; background: transparent; border: 1px solid var(--line); color: var(--fg);
+  width: 44px; height: 44px; font-size: 1.4rem; cursor: pointer; line-height: 1; }
+.lightbox button:hover { border-color: var(--cyan); color: var(--cyan); }
+.lb-close { top: 1.25rem; right: 1.25rem; }
+.lb-prev { left: 1.25rem; top: 50%; transform: translateY(-50%); }
+.lb-next { right: 1.25rem; top: 50%; transform: translateY(-50%); }
+.shot a[data-full] { display: block; cursor: zoom-in; }
+
+/* terminal command chips */
+.term-hints { max-width: 1180px; margin: .6rem auto 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.hint { background: transparent; border: 1px solid var(--line); color: var(--fg-soft);
+  font-family: var(--mono); font-size: .8rem; padding: .25rem .7rem; cursor: pointer; }
+.hint::before { content: "$ "; color: var(--dim); }
+.hint:hover { border-color: var(--green); color: var(--green); }

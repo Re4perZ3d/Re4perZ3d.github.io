@@ -83,10 +83,23 @@
     <li><span class="side-{{ .side }}">{{ .place }}</span><span class="ctf-event">{{ .event }}</span><span class="ctf-year">{{ .year }}</span></li>
     {{ end }}
   </ul>
-  <div class="gallery">
-    <figure class="shot placeholder"><figcaption>Drop CTF photo → static/img/ctf/</figcaption></figure>
-    <figure class="shot placeholder"><figcaption>Team win / scoreboard</figcaption></figure>
-    <figure class="shot placeholder"><figcaption>On stage / prize</figcaption></figure>
+  <div class="gallery" data-lightbox>
+    {{ $imgs := resources.Match "img/ctf/*" }}
+    {{ if $imgs }}
+      {{ range $imgs }}
+        {{ $thumb := .Resize "700x q82" }}
+        {{ $cap := index hugo.Data.gallery (path.Base .Name) }}
+        <figure class="shot"><a href="{{ .RelPermalink }}" data-full aria-label="Open image"><img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ with $cap }}{{ . }}{{ else }}CTF photo{{ end }}" loading="lazy"></a>{{ with $cap }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>
+      {{ end }}
+    {{ else }}
+      <figure class="shot placeholder"><figcaption>No photos yet<br><span class="ph-hint">drop images into assets/img/ctf/</span></figcaption></figure>
+    {{ end }}
+  </div>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+    <button class="lb-close" aria-label="Close">×</button>
+    <button class="lb-prev" aria-label="Previous">‹</button>
+    <img class="lb-img" alt="">
+    <button class="lb-next" aria-label="Next">›</button>
   </div>
 </section>
 

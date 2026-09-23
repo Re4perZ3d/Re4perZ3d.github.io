@@ -1,0 +1,3 @@
+# Optional captions for CTF photos, keyed by filename in assets/img/ctf/.
+# Any image without an entry still shows — it just has no caption.
+hack-the-boo-2025.png: "Hack The Boo 2025 — 14th / 2,893, 23/23 solved"

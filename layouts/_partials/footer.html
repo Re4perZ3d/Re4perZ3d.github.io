@@ -11,8 +11,13 @@
     {{- range site.RegularPages -}}
       {{- $pages = $pages | append (dict "title" .Title "url" .RelPermalink "section" .Section) -}}
     {{- end -}}
-    {{- dict "pages" $pages "github" site.Params.github "linkedin" site.Params.linkedin "htb" site.Params.hackthebox "resume" (site.Params.resume | relURL) "name" site.Params.name | jsonify | safeJS -}}
+    {{- dict "pages" $pages "github" site.Params.github "linkedin" site.Params.linkedin "htb" site.Params.hackthebox "email" site.Params.email "resume" (site.Params.resume | relURL) "name" site.Params.name | jsonify | safeJS -}}
   </script>
+  <div class="term-hints" aria-label="Quick commands">
+    {{ range slice "help" "neofetch" "ctf" "projects" "matrix" "social" }}
+    <button type="button" class="hint" data-term-run="{{ . }}">{{ . }}</button>
+    {{ end }}
+  </div>
   <p class="links">
     {{ with site.Params.github }}<a href="{{ . }}" rel="me">github</a>{{ end }}
     {{ with site.Params.linkedin }}<a href="{{ . }}" rel="me">linkedin</a>{{ end }}
