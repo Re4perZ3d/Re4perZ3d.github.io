@@ -7,8 +7,6 @@ tags: ["purple-team", "vulnerability-management", "wazuh", "ai"]
 ---
 **Role:** I supervised (encadrant) this project, guiding two INSAT students through the design and build during their summer internship.
 
-**Repository:** [github.com/baha0x13/continuous-adversary](https://github.com/baha0x13/continuous-adversary)
-
 ## The problem
 
 Dozens of CVEs are published every day. The hard question is never "does a CVE exist for this software?" but "does this CVE actually affect *this* deployment, and is the vulnerable code reachable by an attacker?" — a slow, manual, expert task. Defensy automates the repetitive, verifiable parts of that chain without removing human judgement.
