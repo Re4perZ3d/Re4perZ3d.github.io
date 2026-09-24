@@ -21,4 +21,18 @@ I moved deliberately away from heavier components (TheHive, Kibana) in favour of
 
 Wazuh · Shuffle · OpenCTI · Mistral 7B (GGUF) · FastAPI · Next.js
 
-> Add: architecture diagram and 2–3 dashboard screenshots.
+## Architecture
+
+![Solution architecture: Wazuh detects, OpenCTI enriches, Shuffle orchestrates, and a custom dashboard with an AI reporting module surfaces it to SOC analysts](soc-architecture.png)
+
+The full workflow: Wazuh collects and detects, Shuffle parses alerts and pulls IOCs, OpenCTI enriches them against OTX and VirusTotal and maps to MITRE ATT&CK, a local Mistral 7B writes the incident report, and everything lands on the custom dashboard.
+
+## The dashboard
+
+![Detailed alert view on the CTI portal — full Sysmon event data, rule details and MITRE mapping for a PowerShell file-drop detection](soc-alert-detail.png)
+
+A detailed alert view: the analyst gets the full event context — process, image, target file, rule level and ATT&CK mapping — without leaving the portal.
+
+![Threat timeline on the CTI portal showing a Mimikatz detection, a malicious hash from VirusTotal and an IOC enrichment step](soc-threat-timeline.png)
+
+The threat timeline ties the pieces together: a Wazuh Mimikatz detection, a VirusTotal hash verdict and a Shuffle enrichment step, in one view.

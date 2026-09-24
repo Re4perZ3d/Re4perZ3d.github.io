@@ -44,3 +44,7 @@ Install Hugo extended, then `hugo server` and open http://localhost:1313
 - The emblem/favicon live in `static/img/` (`icon-512.png`, `favicon.png`). Swap them to change the logo.
 - CTF photos: drop any images into `assets/img/ctf/` — the gallery auto-catalogs them with thumbnails and a lightbox. Optional captions in `data/gallery.yaml` (keyed by filename).
 - Certs, CTF wins and HTB stats are data — edit `data/stats.yaml`. Projects shown on the home page: `data/projects.yaml`.
+
+## Articles
+
+`hugo new articles/my-article.md` (or a folder `articles/my-article/index.md` with images alongside). Same front matter as writeups; `side: intel` gives the yellow tag.

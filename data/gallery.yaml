@@ -1,3 +1,12 @@
-# Optional captions for CTF photos, keyed by filename in assets/img/ctf/.
+# Captions for CTF photos, keyed by filename in assets/img/ctf/.
 # Any image without an entry still shows — it just has no caption.
 hack-the-boo-2025.png: "Hack The Boo 2025 — 14th / 2,893, 23/23 solved"
+chickout-2-0-1.jpg: "Chickout 2.0 — 1st place"
+chickout-2-0-2.jpg: "Chickout 2.0 — 1st place"
+chickout-2-0-3.jpg: "Chickout 2.0 — team no!dea"
+darkest-hour-ctf-3-0-1.jpg: "Darkest Hour CTF 3.0 (INSAT) — 1st place"
+darkest-hour-ctf-3-0-2.jpg: "Darkest Hour CTF 3.0 (INSAT)"
+ensit-ctf-1.jpg: "CTF @ ENSIT — 1000 DT prize"
+ensit-ctf-2.jpg: "CTF @ ENSIT"
+ctf-2025-03-13-1.jpg: "CTF — March 2025"
+ctf-2025-03-13-2.jpg: "CTF — March 2025"

@@ -25,8 +25,8 @@ enableRobotsTXT = true
     pageRef = "/writeups"
     weight = 2
   [[menus.main]]
-    name = "~/research"
-    pageRef = "/research"
+    name = "~/articles"
+    pageRef = "/articles"
     weight = 3
   [[menus.main]]
     name = "~/projects"
@@ -40,6 +40,10 @@ enableRobotsTXT = true
     name = "~/cheatsheets"
     pageRef = "/cheatsheets"
     weight = 6
+  [[menus.main]]
+    name = "~/contact"
+    url = "/#contact"
+    weight = 7
 
 [markup]
   [markup.highlight]

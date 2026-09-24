@@ -9,7 +9,7 @@
   var data = { pages: [] };
   try { data = JSON.parse(dataEl.textContent); } catch (e) {}
 
-  var dirs = ["whoami", "writeups", "research", "projects", "certs", "cheatsheets", "tags"];
+  var dirs = ["whoami", "writeups", "articles", "projects", "certs", "cheatsheets", "tags"];
   var sections = ["stats", "certs", "ctf", "projects", "latest"];
   var history = [], hIndex = 0;
 

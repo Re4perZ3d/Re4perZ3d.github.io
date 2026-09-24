@@ -125,14 +125,28 @@
 </section>
 
 <section id="latest" class="band reveal" aria-labelledby="latest-h">
-  <p class="cmd" id="latest-h"><span class="p-dim">$ </span>ls -lt ~/writeups ~/research | head</p>
-  {{ $posts := where site.RegularPages "Section" "in" (slice "writeups" "research") }}
+  <p class="cmd" id="latest-h"><span class="p-dim">$ </span>ls -lt ~/writeups ~/articles | head</p>
+  {{ $posts := where site.RegularPages "Section" "in" (slice "writeups" "articles") }}
   {{ with first 6 $posts }}
   <ul class="ls">{{ range . }}{{ partial "row.html" . }}{{ end }}</ul>
   {{ else }}
   <p class="empty">Nothing here yet.</p>
   {{ end }}
   <p class="band-link"><a href="{{ "/writeups/" | relURL }}">all writeups &rarr;</a></p>
+</section>
+
+
+<section id="contact" class="band reveal" aria-labelledby="contact-h">
+  <p class="cmd" id="contact-h"><span class="p-dim">$ </span>./contact.sh</p>
+  <div class="contact">
+    <p class="contact-lead">Got a security problem, a CTF, or just want to talk shop? Reach out.</p>
+    <div class="contact-links">
+      <a class="btn" href="mailto:{{ site.Params.email }}">{{ site.Params.email }}</a>
+      {{ with site.Params.github }}<a class="btn ghost" href="{{ . }}" rel="me">GitHub</a>{{ end }}
+      {{ with site.Params.linkedin }}<a class="btn ghost" href="{{ . }}" rel="me">LinkedIn</a>{{ end }}
+      {{ with site.Params.hackthebox }}<a class="btn ghost" href="{{ . }}" rel="me">Hack The Box</a>{{ end }}
+    </div>
+  </div>
 </section>
 
 {{ end }}
