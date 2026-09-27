@@ -3,7 +3,7 @@ title: "Getting Started with Cyber Threat Intelligence (CTI)"
 date: 2025-07-15
 side: "intel"
 summary: "A beginner's guide to CTI from someone learning the field: what it is, the four intelligence types, the CTI lifecycle, and the frameworks that tie it together — ATT&CK, the kill chains, the Diamond Model and ENISA's 2024 landscape."
-tags: ["cti", "mitre-attack", "threat-intel", "learning"]
+tags: ["cti", "mitre-attack", "diamond-model", "threat-intel"]
 ---
 New to Cyber Threat Intelligence, I soon learned why it matters — not just for large enterprises, but for any organisation defending against ever-evolving threats. This is my beginner's breakdown of CTI: what it is, what it's used for, its main categories, and how to read a tactical threat-intelligence report, written as someone currently studying the field.
 
@@ -69,6 +69,8 @@ Threat intelligence runs as a cyclical, six-stage process that turns raw data in
 
 Why it matters: the cycle keeps intelligence relevant, focuses limited resources on the threats that matter most, and connects analysts with consumers so the intel stays actionable and keeps improving.
 
+![Threat Analysis Process: from lining up defensive strategies with the Cyber Kill Chain, through threat modeling and the Diamond Model, to deploying CTI tools like AlienVault USM, IBM X-Force Exchange and AutoFocus](cti-threat-analysis-process.png)
+
 ## The frameworks that tie it together
 
 ### MITRE ATT&CK
@@ -83,6 +85,8 @@ Thinking like an attacker before they act. OWASP frames it as four questions: **
 
 Designed by Paul Pols, the UKC maps **18 phases** across three high-level goals — getting **In** (recon → resource development → delivery → social engineering → exploitation → persistence → defense evasion → C2), moving **Through** (pivoting → discovery → privilege escalation → execution → credential access → lateral movement), and going **Out** (collection → exfiltration → impact → objectives). It's the most complete of the models and great for building attack timelines.
 
+![The Unified Kill Chain's three phases as circles: In (green) covering reconnaissance through command and control, Through (orange) covering pivoting through lateral movement, and Out (red) covering collection through objectives](cti-ukc.png)
+
 ### The Cyber Kill Chain
 
 Lockheed Martin's original 7-step model: reconnaissance → weaponization → delivery → exploitation → installation → command & control → actions on objectives. Older and perimeter-focused, but still a great mental model — break one link and the whole attack can fail.
@@ -90,6 +94,8 @@ Lockheed Martin's original 7-step model: reconnaissance → weaponization → de
 ### The Diamond Model
 
 Developed by Caltagirone, Pendergast and Betz, it dissects an intrusion through four vertices — **Adversary, Capability, Infrastructure, Victim** — enriched with meta-features (timestamp, phase, methodology, result, direction, resources). Its strength is **attribution and analytic pivoting**: start from one point (say an IP) and pivot around the graph to uncover related adversaries, victims or capabilities.
+
+![The Diamond Model: Adversary at top connects to Infrastructure (uses) and Capability (develops), which both connect down to Victim (connects to / exploits), with Infrastructure and Capability linked by "deployed via"](cti-diamond-model.png)
 
 Each framework complements the others. Integrated, they give a fuller picture of attacker behaviour and where to focus defences.
 

@@ -48,3 +48,7 @@ Install Hugo extended, then `hugo server` and open http://localhost:1313
 ## Articles
 
 `hugo new articles/my-article.md` (or a folder `articles/my-article/index.md` with images alongside). Same front matter as writeups; `side: intel` gives the yellow tag.
+
+## Share buttons
+
+Writeups and articles get a `$ share --to` row automatically (LinkedIn, X, copy link) — nothing to configure.

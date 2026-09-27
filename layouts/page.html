@@ -9,6 +9,15 @@
       {{ if gt .ReadingTime 1 }}<span>{{ .ReadingTime }} min read</span>{{ end }}
     </p>
     {{ with .Params.tags }}<ul class="tags">{{ range . }}<li><a href="{{ (printf "/tags/%s/" (. | urlize)) | relURL }}">#{{ . }}</a></li>{{ end }}</ul>{{ end }}
+    {{ if or (eq .Section "writeups") (eq .Section "articles") }}
+    {{ $url := .Permalink }}
+    <div class="share">
+      <span class="share-label">$ share --to</span>
+      <a class="share-btn li" href="https://www.linkedin.com/sharing/share-offsite/?url={{ $url | urlquery }}" target="_blank" rel="noopener" aria-label="Share on LinkedIn">LinkedIn</a>
+      <a class="share-btn x" href="https://twitter.com/intent/tweet?url={{ $url | urlquery }}&amp;text={{ .Title | urlquery }}" target="_blank" rel="noopener" aria-label="Share on X">X</a>
+      <button type="button" class="share-btn copy" data-copy-url="{{ $url }}" aria-label="Copy link">copy link</button>
+    </div>
+    {{ end }}
   </header>
   {{ if and (gt .WordCount 400) (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") }}
   <details class="toc"><summary>contents</summary>{{ .TableOfContents }}</details>

@@ -154,3 +154,21 @@
     });
   });
 })();
+
+// copy-link buttons on writeup/article pages
+document.querySelectorAll("[data-copy-url]").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var url = btn.getAttribute("data-copy-url");
+    var done = function () {
+      var old = btn.textContent;
+      btn.textContent = "copied!";
+      btn.classList.add("copied");
+      setTimeout(function () { btn.textContent = old; btn.classList.remove("copied"); }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(done).catch(function () { prompt("Copy this link:", url); });
+    } else {
+      prompt("Copy this link:", url);
+    }
+  });
+});
