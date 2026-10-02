@@ -9,7 +9,7 @@
       {{ if gt .ReadingTime 1 }}<span>{{ .ReadingTime }} min read</span>{{ end }}
     </p>
     {{ with .Params.tags }}<ul class="tags">{{ range . }}<li><a href="{{ (printf "/tags/%s/" (. | urlize)) | relURL }}">#{{ . }}</a></li>{{ end }}</ul>{{ end }}
-    {{ if or (eq .Section "writeups") (eq .Section "articles") }}
+    {{ if in (slice "writeups" "articles" "projects" "cheatsheets") .Section }}
     {{ $url := .Permalink }}
     <div class="share">
       <span class="share-label">$ share --to</span>
