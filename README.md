@@ -52,3 +52,10 @@ Install Hugo extended, then `hugo server` and open http://localhost:1313
 ## Share buttons
 
 Writeups and articles get a `$ share --to` row automatically (LinkedIn, X, copy link) — nothing to configure.
+
+## Visual effects
+
+- Background: `static/img/bg-wallpaper.jpg` (your RZ emblem art), dimmed with `.bg-overlay` for text readability. Matrix rain draws on top in `static/js/matrix.js`.
+- Terminal lives at the TOP of every page now (`layouts/_partials/terminal.html`), not the footer.
+- `static/js/effects.js`: periodic glitch flicker on the home banner, a "decrypt" scramble-in animation for section headings on scroll, and mouse-parallax tilt on the hero emblem. All respect prefers-reduced-motion.
+- Type `matrix` in the terminal for a temporary intense burst of the rain.

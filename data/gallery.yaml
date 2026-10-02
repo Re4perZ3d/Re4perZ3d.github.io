@@ -1,6 +1,7 @@
 # Captions for CTF photos, keyed by filename in assets/img/ctf/.
 # Any image without an entry still shows — it just has no caption.
 hack-the-boo-2025.png: "Hack The Boo 2025 — 14th / 2,893, 23/23 solved"
+sparkctf-2025.jpg: "SparkCTF 2025 — 3rd place"
 chickout-2-0-1.jpg: "Chickout 2.0 — 1st place"
 chickout-2-0-2.jpg: "Chickout 2.0 — 1st place"
 chickout-2-0-3.jpg: "Chickout 2.0 — team no!dea"
