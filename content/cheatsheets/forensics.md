@@ -1,6 +1,6 @@
 ---
 title: "Forensics Cheat Sheet"
-date: 2026-09-01
+date: 2026-10-01
 side: "blue"
 summary: "My full DFIR reference: memory, disk, Windows artifacts, Eric Zimmerman tools, log analysis, network forensics, malware triage, steganography and CTF tricks."
 tags: ["dfir", "forensics", "volatility", "windows-forensics", "ctf"]

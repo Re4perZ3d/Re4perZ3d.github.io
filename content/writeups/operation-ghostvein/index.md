@@ -1,6 +1,6 @@
 ---
 title: "Operation GhostVein: Linux DFIR"
-date: 2026-09-23
+date: 2026-05-29
 side: "blue"
 summary: "A Linux DFIR challenge I authored: reconstructing an OFBiz exploitation, PAM backdoor, SSH pivot and DNS exfiltration from host artifacts and PCAPs."
 tags: ["dfir", "linux", "authored", "pcap"]

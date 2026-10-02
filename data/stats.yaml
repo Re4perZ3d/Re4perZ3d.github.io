@@ -17,11 +17,11 @@ certs:
 
 # CTF competition record (team no!dea)
 ctf:
-  - { event: "SparkCTF",                   place: "3rd place",         year: "2025", side: "purple" }
   - { event: "Darkest Hour CTF",           place: "1st place",         year: "2026", side: "red" }
   - { event: "CrackoutCTF",                place: "1st place",         year: "2025", side: "red" }
   - { event: "DarkNetsCTF",                place: "1st place",         year: "2025", side: "red" }
   - { event: "TEK-UP CTF KAREEM",          place: "2nd place",         year: "2025", side: "purple" }
+  - { event: "SparkCTF",                   place: "3rd place",         year: "2026", side: "purple" }
   - { event: "CyberDefenders Tunisia",     place: "Top 3",             year: "2025", side: "blue" }
   - { event: "Securinets Quals",           place: "Top 7 N. Africa",   year: "2025", side: "purple" }
   - { event: "Securinets INSAT Finals",    place: "8th",               year: "2025", side: "purple" }

@@ -253,13 +253,13 @@ main { position: relative; z-index: 2; max-width: 1180px; }
   opacity: .12; transition: opacity .8s ease; }
 .matrix.loud { opacity: .5; }
 .bg-wallpaper { position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background: url("/img/bg-wallpaper.jpg") no-repeat center 24%;
-  background-size: cover; opacity: .5; filter: saturate(1.2) contrast(1.08);
+  background: url("/img/bg-wallpaper.jpg") no-repeat center 22%;
+  background-size: cover; opacity: .68; filter: saturate(1.25) contrast(1.1);
   transform: scale(1.02); }
 .bg-overlay { position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(10,13,18,.42) 0%, rgba(10,13,18,.72) 34%, var(--bg) 88%),
-    radial-gradient(1200px 700px at 50% 0%, rgba(10,13,18,.05), rgba(10,13,18,.8) 72%); }
+    linear-gradient(180deg, rgba(10,13,18,.28) 0%, rgba(10,13,18,.58) 32%, var(--bg) 86%),
+    radial-gradient(1200px 700px at 50% 0%, rgba(10,13,18,0), rgba(10,13,18,.68) 74%); }
 .scanlines { z-index: 3; }
 main { z-index: 4; }
 .topbar, .footer { position: relative; z-index: 4; }
