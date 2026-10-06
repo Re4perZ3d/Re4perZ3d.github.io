@@ -40,3 +40,8 @@ don't expire, unlike Notion's own image links).
   low value once you can link straight to attack.mitre.org, and there were a lot of them.
 - "Cybereason Cobalt Kitty - answers.pdf" and "ticket-473845 answers.pdf" — these are
   answer keys from a paid ATT&CK-mapping training course, not something to redistribute.
+
+## static/img/cheatsheets/
+| File | Shows |
+|---|---|
+| mft-offset.png | Hex-editor view of the MFT offset calculation (forensics cheat sheet, MFTECmd section). Source: Downloads\CaptureNotion.png |

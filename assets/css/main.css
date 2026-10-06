@@ -48,15 +48,15 @@ a:hover { color: var(--purple); text-decoration: underline; text-underline-offse
 /* hero */
 .hero { margin-bottom: 2.5rem; }
 .banner {
-  width: fit-content; max-width: 100%;
+  display: block; width: fit-content; max-width: 100%;
   margin: 0 0 1.75rem; font-family: var(--mono); font-weight: 800; line-height: 1.12;
-  font-size: clamp(8.5px, 1.9vw, 16px); overflow-x: auto;
-  background: linear-gradient(100deg, #ff5f6d 0%, #ffc371 22%, #9ece6a 42%, #7dcfff 62%, #7aa2f7 78%, #bb9af7 100%);
+  font-size: min(32px, calc((100vw - 3.5rem) / 34)); overflow: visible;
+  background: linear-gradient(90deg, #ff5f6d, #ffc371, #9ece6a, #7dcfff, #7aa2f7, #bb9af7, #ff5f6d);
   background-size: 200% 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: lolcat 8s linear infinite alternate;
+  animation: rgbflow 3s linear infinite;
 }
-@keyframes lolcat { to { background-position: 100% 0; } }
+@keyframes rgbflow { from { background-position: 0% 0; } to { background-position: 200% 0; } }
 .out { color: var(--fg-soft); max-width: 70ch; }
 .out p { margin: 0 0 .5rem; }
 .status { color: var(--yellow); margin: .75rem 0 0; }

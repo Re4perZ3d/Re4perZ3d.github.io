@@ -315,7 +315,7 @@ sudo mount -o loop dis/dislocker-file mounted
 
 **MFT offset calculation:** `Entry Number × 1024 = offset in bytes` → convert to HEX → search in hex editor. The objective is to determine the offset of the stager file, for example.
 
-> 📸 *Screenshot: hex-editor view of an MFT offset calculation — add from your notes (the original Notion image link had already expired by the time this page was built).*
+![Hex editor view of the MFT offset calculation used to locate the stager file](/img/cheatsheets/mft-offset.png)
 </details>
 
 <details><summary>Event Logs — EvtxECmd</summary>
