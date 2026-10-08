@@ -63,16 +63,8 @@
 </section>
 
 <section id="certs" class="band reveal" aria-labelledby="certs-h">
-  <p class="cmd" id="certs-h"><span class="p-dim">$ </span>ls certs/ --verify</p>
-  <div class="cards">
-    {{ range hugo.Data.stats.certs }}
-    <div class="card side-{{ .side }}">
-      <div class="card-top"><span class="card-name">{{ .name }}</span><span class="card-year">{{ .year }}</span></div>
-      <p class="card-full">{{ .full }}</p>
-      <div class="card-foot"><span class="card-issuer">{{ .issuer }}</span>{{ with .url }}<a href="{{ . }}" rel="noopener">verify &rarr;</a>{{ end }}</div>
-    </div>
-    {{ end }}
-  </div>
+  <p class="cmd" id="certs-h"><span class="p-dim">$ </span>ls certs/</p>
+  {{ partial "certcards.html" . }}
 </section>
 
 <section id="ctf" class="band reveal" aria-labelledby="ctf-h">

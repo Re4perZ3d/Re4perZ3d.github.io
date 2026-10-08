@@ -323,3 +323,11 @@ body { background:
 @media (prefers-reduced-motion: reduce) {
   .banner.glitch { animation: none; text-shadow: none; }
 }
+
+/* certificate pages */
+.cert-figs { display: grid; gap: 1.25rem; margin: 0 0 2rem; max-width: 78ch; }
+.cert-fig { margin: 0; border: 1px solid var(--line); background: var(--panel); padding: .6rem; transition: border-color .15s ease; }
+.cert-fig:hover { border-color: var(--cyan); }
+.cert-fig a { display: block; cursor: zoom-in; }
+.cert-fig img { display: block; width: 100%; height: auto; }
+.cert-verify { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px dashed var(--line); }

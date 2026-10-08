@@ -1,0 +1,6 @@
+{{ define "main" }}
+<p class="cmd">{{ partial "prompt.html" "~/certs" }}ls -l</p>
+<h1>{{ .Title }}</h1>
+{{ with .Content }}<div class="prose intro">{{ . }}</div>{{ end }}
+{{ partial "certcards.html" . }}
+{{ end }}

@@ -45,3 +45,16 @@ don't expire, unlike Notion's own image links).
 | File | Shows |
 |---|---|
 | mft-offset.png | Hex-editor view of the MFT offset calculation (forensics cheat sheet, MFTECmd section). Source: Downloads\CaptureNotion.png |
+
+## content/certs/*/ (certificate images)
+Each certificate page shows every file named `certificate*` (png/jpg) in its folder.
+Source: Downloads\Certifss (PDF, first page rendered to PNG).
+
+| Folder | Files |
+|---|---|
+| crtp/ | certificate.png |
+| ecpptv3/ | certificate.png |
+| ejptv3/ | certificate.png |
+| ccna/ | certificate-1.png, certificate-2.png, certificate-3.png (CCNA 1, 2, 3) |
+
+The CTI certificate has no page on purpose: its card links straight to the arcX verify page.

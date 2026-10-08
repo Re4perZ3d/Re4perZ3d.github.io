@@ -59,3 +59,7 @@ Writeups and articles get a `$ share --to` row automatically (LinkedIn, X, copy 
 - Terminal lives at the TOP of every page now (`layouts/_partials/terminal.html`), not the footer.
 - `static/js/effects.js`: periodic glitch flicker on the home banner, a "decrypt" scramble-in animation for section headings on scroll, and mouse-parallax tilt on the hero emblem. All respect prefers-reduced-motion.
 - Type `matrix` in the terminal for a temporary intense burst of the rain.
+
+## Certificates
+
+Cards come from `data/stats.yaml` (`certs`). A card with `page: slug` opens `content/certs/<slug>/`; a card with only `url` links straight to the verify page. On a cert page: front matter `verify:` adds the Verify button, and any `certificate*.png` in the folder is shown at the top.

@@ -1,0 +1,32 @@
+{{ define "main" }}
+<article>
+  <p class="cmd">{{ partial "prompt.html" "~/certs" }}cat {{ .File.ContentBaseName }}.md</p>
+  <header class="post-head">
+    <h1>{{ .Title }}</h1>
+    <p class="meta">
+      {{ partial "side.html" . }}
+      {{ with .Params.issuer }}<span>{{ . }}</span>{{ end }}
+      {{ with .Params.issued }}<span>{{ . }}</span>{{ end }}
+    </p>
+  </header>
+
+  {{ $imgs := .Resources.Match "certificate*" }}
+  {{ if $imgs }}
+  <div class="cert-figs">
+    {{ range $imgs }}
+    {{ $thumb := .Resize "1100x q85" }}
+    <figure class="cert-fig"><a href="{{ .RelPermalink }}" target="_blank" rel="noopener"><img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ $.Title }} certificate"></a></figure>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  <div class="prose">{{ .Content }}</div>
+
+  {{ with .Params.verify }}
+  <div class="cert-verify">
+    <p class="cmd"><span class="p-dim">$ </span>verify --credential</p>
+    <a class="btn" href="{{ . }}" target="_blank" rel="noopener">Verify credential &rarr;</a>
+  </div>
+  {{ end }}
+</article>
+{{ end }}

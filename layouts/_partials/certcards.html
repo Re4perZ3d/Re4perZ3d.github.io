@@ -1,0 +1,11 @@
+<div class="cards">
+  {{ range hugo.Data.stats.certs }}
+  {{ $href := "" }}{{ $label := "verify" }}{{ $ext := true }}
+  {{ with .page }}{{ $href = (printf "/certs/%s/" .) | relURL }}{{ $label = "view" }}{{ $ext = false }}{{ else }}{{ $href = .url }}{{ end }}
+  <div class="card side-{{ .side }}">
+    <div class="card-top"><span class="card-name">{{ .name }}</span><span class="card-year">{{ .year }}</span></div>
+    <p class="card-full">{{ .full }}</p>
+    <div class="card-foot"><span class="card-issuer">{{ .issuer }}</span>{{ with $href }}<a href="{{ . }}"{{ if $ext }} rel="noopener"{{ end }}>{{ $label }} &rarr;</a>{{ end }}</div>
+  </div>
+  {{ end }}
+</div>
