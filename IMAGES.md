@@ -58,3 +58,27 @@ Source: Downloads\Certifss (PDF, first page rendered to PNG).
 | ccna/ | certificate-1.png, certificate-2.png, certificate-3.png (CCNA 1, 2, 3) |
 
 The CTI certificate has no page on purpose: its card links straight to the arcX verify page.
+
+## content/writeups/ — authored CTF challenge writeups (verbatim imports)
+Source: cloned read-only from the author's own public repos
+`github.com/Re4perZ3d/Securinets-Beginner-CTF-2025` and
+`github.com/Re4perZ3d/CyberSparkCTF`. Each writeup's `index.md` body is the
+unmodified README.md from that challenge's folder (front matter only added on
+top); every `.png`/`.jpg` in the challenge folder was copied alongside it.
+Non-image handout files (`.pcap`, `.rar`, `.txt`) were intentionally **not**
+copied — they aren't referenced inline in the writeups and aren't needed to
+display the page.
+
+| Folder | Source repo / challenge | Images |
+|---|---|---|
+| intro-to-volatility/ | Securinets-Beginner-CTF-2025 / IntroToVolatility | Screenshot_16–22.png |
+| obfuscated/ | Securinets-Beginner-CTF-2025 / Obfuscated | Screenshot_13–15.png |
+| punkvania/ | Securinets-Beginner-CTF-2025 / PunkVania | Screenshot_28–34.png |
+| red-penguin/ | Securinets-Beginner-CTF-2025 / RedPenguin | none (README has no images) |
+| solarwinds-campaign/ | Securinets-Beginner-CTF-2025 / SolarWinds | Screenshot_23–27.png |
+| vigenere/ | Securinets-Beginner-CTF-2025 / Vigenère | Screenshot_11–12.png |
+| arcane-door/ | CyberSparkCTF / ArcaneDoor | none (README has no images) |
+| backdoor/ | CyberSparkCTF / Backdoor | none (README has no images) |
+| discord-bot/ | CyberSparkCTF / DiscordBadyyyy | Screenshot_1547–1553.png |
+| hello/ | CyberSparkCTF / Hello | Screenshot_1555–1562.png |
+| magic-bytes/ | CyberSparkCTF / MagicBytes | Screenshot_1542–1545.png, Screenshot_1554.png |

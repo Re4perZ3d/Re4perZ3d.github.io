@@ -1,7 +1,7 @@
 ---
 title: "CRTP — Certified Red Team Professional"
 date: 2026-07-01
-side: "purple"
+side: "red"
 issuer: "Altered Security"
 issued: "July 2026"
 verify: "https://www.credential.net/d709c3d2-d7ed-4789-b4f5-b7da514b6350#acc.Tg1Cyh2l"

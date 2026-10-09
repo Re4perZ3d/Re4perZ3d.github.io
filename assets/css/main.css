@@ -325,7 +325,7 @@ body { background:
 }
 
 /* certificate pages */
-.cert-figs { display: grid; gap: 1.25rem; margin: 0 0 2rem; max-width: 78ch; }
+.cert-figs { display: grid; gap: 1.25rem; margin: 0 0 2rem; max-width: 100%; }
 .cert-fig { margin: 0; border: 1px solid var(--line); background: var(--panel); padding: .6rem; transition: border-color .15s ease; }
 .cert-fig:hover { border-color: var(--cyan); }
 .cert-fig a { display: block; cursor: zoom-in; }

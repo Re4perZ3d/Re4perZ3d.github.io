@@ -10,7 +10,7 @@ htb:
 # Certifications. `page` = slug of a page in content/certs/ (card links there).
 # Without `page`, the card links straight to the external verify URL.
 certs:
-  - { name: "CRTP",     full: "Certified Red Team Professional",           issuer: "Altered Security", year: "2026", side: "purple", page: "crtp" }
+  - { name: "CRTP",     full: "Certified Red Team Professional",           issuer: "Altered Security", year: "2026", side: "red", page: "crtp" }
   - { name: "eCPPTv3",  full: "Certified Professional Penetration Tester", issuer: "INE",              year: "2026", side: "red",    page: "ecpptv3" }
   - { name: "eJPTv3",   full: "Junior Penetration Tester",                 issuer: "INE",              year: "2025", side: "red",    page: "ejptv3" }
   - { name: "CTI",      full: "Threat Intelligence Analyst (Foundation)",  issuer: "arcX",             year: "2025", side: "blue",   url: "https://arcx.io/verify-certificate?id=dee5f2a94e9efe9e3a877e9314c79cb09d2fd8b1&k=28c6a9eee96e4fb0853abc11ac17447c" }
