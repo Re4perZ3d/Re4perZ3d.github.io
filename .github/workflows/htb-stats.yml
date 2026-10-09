@@ -1,0 +1,34 @@
+name: Update HTB stats
+
+on:
+  schedule:
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refresh data/stats.yaml
+        env:
+          HTB_API_TOKEN: ${{ secrets.HTB_API_TOKEN }}
+        run: python3 scripts/update-htb-stats.py
+      - name: Commit and redeploy if changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet data/stats.yaml; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "chore: refresh HTB stats"
+          git push
+          # pushes made with GITHUB_TOKEN don't trigger other workflows
+          gh workflow run hugo.yml --ref main

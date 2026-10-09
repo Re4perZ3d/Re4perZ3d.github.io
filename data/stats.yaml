@@ -3,8 +3,8 @@ htb:
   - { key: "rank",       value: "Prodigy", color: "green" }
   - { key: "level",      value: "78",      color: "green" }
   - { key: "machines",   value: "41",      color: "cyan" }
-  - { key: "sherlocks",  value: "50",      color: "cyan" }
-  - { key: "challenges", value: "66",      color: "cyan" }
+  - { key: "sherlocks",  value: "51",      color: "cyan" }
+  - { key: "challenges", value: "69",      color: "cyan" }
   - { key: "season 9",   value: "Ruby",    color: "red" }
 
 # Certifications. `page` = slug of a page in content/certs/ (card links there).

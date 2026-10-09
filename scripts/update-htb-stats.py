@@ -1,120 +1,98 @@
 #!/usr/bin/env python3
 """
-Fetch Mohamed's public Hack The Box profile stats and update data/stats.yaml.
+Refresh the HTB counts in data/stats.yaml from the official HTB API (v4).
 
-HTB's profile page (https://app.hackthebox.com/profile/<id>) is a client-side
-rendered Vue app with no documented public JSON API, so this script drives a
-headless browser, waits for the profile to render, and reads the numbers
-straight off the page text. That makes it resilient to not knowing HTB's
-internal API, but it DOES depend on the profile page's wording/labels — if
-HTB changes its profile layout, the regexes below may need updating.
+Auth: HTB App Token in the HTB_API_TOKEN environment variable (never written
+to disk or printed). Stdlib only.
 
-Requires the "Public Profile" setting to be ON for this HTB account
-(HTB Settings -> Profile -> make profile public), otherwise the page will
-show a "this profile is private" message instead of stats and the script
-will exit without making changes.
+Updated rows: machines, sherlocks, challenges.
+Left alone on purpose: rank, level (the API's rank/progress fields do not
+match the values shown on the site) and the season row (manual edit).
 
 Usage:
-    python3 scripts/update-htb-stats.py [--profile-id 1720033] [--dry-run]
-
-Run via Playwright (pip install playwright && playwright install chromium).
+    HTB_API_TOKEN=... python3 scripts/update-htb-stats.py [--dry-run] [--debug]
 """
 import argparse
+import json
+import os
 import re
 import sys
+import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 STATS_YAML = ROOT / "data" / "stats.yaml"
+API = "https://labs.hackthebox.com/api/v4"
+PROFILE_ID = "1720033"
 
-DEFAULT_PROFILE_ID = "1720033"  # Re4perZ3d — https://app.hackthebox.com/profile/1720033
-
-# Maps the stat `key` already used in data/stats.yaml -> a list of regexes
-# tried in order against the rendered page's visible text. First match wins.
-# NOTE: these patterns are a best-effort starting point written without being
-# able to reach hackthebox.com from the sandbox that authored this script.
-# Verify each one against the live profile page (e.g. with Playwright's
-# codegen/inspector, or just view-source after letting the page render) and
-# adjust before trusting the scheduled run to auto-commit.
-PATTERNS = {
-    "rank":       [r"Rank\s*\n?\s*([A-Za-z ]+?)\s*\n"],
-    "level":      [r"(?:Level|Rank Progress)\s*\n?\s*(\d{1,3})\b"],
-    "machines":   [r"(\d+)\s*\n?\s*(?:Machines|User Owns|System Owns)\b"],
-    "sherlocks":  [r"(\d+)\s*\n?\s*Sherlocks?\b"],
-    "challenges": [r"(\d+)\s*\n?\s*Challenges?\b"],
+# key in stats.yaml -> (endpoint, path into the JSON response)
+ENDPOINTS = {
+    "machines":   (f"/user/profile/basic/{PROFILE_ID}", ("profile", "system_owns")),
+    "sherlocks":  (f"/user/profile/progress/sherlocks/{PROFILE_ID}", ("profile", "challenge_owns", "solved")),
+    "challenges": (f"/user/profile/progress/challenges/{PROFILE_ID}", ("profile", "challenge_owns", "solved")),
 }
 
 
-def scrape(profile_id: str) -> dict:
-    from playwright.sync_api import sync_playwright
-
-    url = f"https://app.hackthebox.com/profile/{profile_id}"
-    found = {}
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
-        page.goto(url, wait_until="networkidle", timeout=45000)
-        # The Vue app needs a beat after networkidle to paint stat widgets.
-        page.wait_for_timeout(3000)
-        body_text = page.inner_text("body")
-        browser.close()
-
-    if re.search(r"private", body_text, re.I) and not re.search(r"Rank", body_text, re.I):
-        print("Profile looks private or stats not visible — enable "
-              "'Public Profile' in HTB settings. No changes made.", file=sys.stderr)
-        return {}
-
-    for key, patterns in PATTERNS.items():
-        for pat in patterns:
-            m = re.search(pat, body_text)
-            if m:
-                found[key] = m.group(1).strip()
-                break
-    return found
+def fetch(endpoint, token):
+    req = urllib.request.Request(API + endpoint, headers={
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/json",
+        "User-Agent": "personal-site-stats/1.0",
+    })
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.load(r)
 
 
-def update_yaml(new_values: dict, dry_run: bool = False) -> bool:
+def dig(obj, path):
+    for k in path:
+        obj = obj[k]
+    return obj
+
+
+def update_yaml(values, dry_run):
     text = STATS_YAML.read_text(encoding="utf-8")
     changed = False
-    for key, value in new_values.items():
-        # Matches one htb: row line, e.g.: - { key: "rank", value: "Prodigy", color: "green" }
-        pat = re.compile(
-            r'(- \{ key: "' + re.escape(key) + r'",\s*value: ")([^"]*)(")'
-        )
+    for key, value in values.items():
+        pat = re.compile(r'(- \{ key: "' + re.escape(key) + r'",\s*value: ")([^"]*)(")')
         m = pat.search(text)
-        if not m:
-            continue
-        old_value = m.group(2)
-        if old_value == str(value):
+        if not m or m.group(2) == str(value):
             continue
         text = pat.sub(lambda mm: mm.group(1) + str(value) + mm.group(3), text, count=1)
-        print(f"{key}: {old_value!r} -> {value!r}")
+        print(f"{key}: {m.group(2)!r} -> {value!r}")
         changed = True
-
-    if changed and not dry_run:
-        STATS_YAML.write_text(text, encoding="utf-8")
-    elif changed:
-        print("(dry run — not writing)")
-    else:
+    if not changed:
         print("No stat changes detected.")
+    elif dry_run:
+        print("(dry run - not writing)")
+    else:
+        STATS_YAML.write_text(text, encoding="utf-8")
     return changed
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--profile-id", default=DEFAULT_PROFILE_ID)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--debug", action="store_true", help="print raw JSON per endpoint")
     args = ap.parse_args()
 
-    values = scrape(args.profile_id)
-    if not values:
-        print("No stats scraped; leaving data/stats.yaml untouched.")
-        sys.exit(0)
+    token = os.environ.get("HTB_API_TOKEN")
+    if not token:
+        sys.exit("HTB_API_TOKEN is not set")
 
-    changed = update_yaml(values, dry_run=args.dry_run)
-    # Exit code 0 either way; the workflow checks `git status` to decide
-    # whether to commit, so a no-op run is not a failure.
-    sys.exit(0)
+    cache, values = {}, {}
+    for key, (endpoint, path) in ENDPOINTS.items():
+        try:
+            if endpoint not in cache:
+                cache[endpoint] = fetch(endpoint, token)
+                if args.debug:
+                    print(f"== {endpoint}\n{json.dumps(cache[endpoint])[:2000]}")
+            val = dig(cache[endpoint], path)
+        except Exception as e:  # leave stats untouched on any failure
+            sys.exit(f"{key}: failed ({type(e).__name__}: {e}); no changes made")
+        if not isinstance(val, int) or val < 0:
+            sys.exit(f"{key}: unexpected value {val!r}; no changes made")
+        values[key] = val
+    update_yaml(values, args.dry_run)
 
 
 if __name__ == "__main__":

@@ -66,23 +66,19 @@ Cards come from `data/stats.yaml` (`certs`). A card with `page: slug` opens `con
 
 ## HTB stats auto-update
 
-`.github/workflows/htb-stats.yml` runs daily (and can be triggered manually
-from the Actions tab) to refresh the `htb:` block in `data/stats.yaml`
-straight from the public profile page, instead of editing it by hand.
+`.github/workflows/htb-stats.yml` runs daily (and from the Actions tab) and
+runs `scripts/update-htb-stats.py`, which reads the official HTB API
+(`labs.hackthebox.com/api/v4`) with an App Token stored as the repo secret
+`HTB_API_TOKEN` (App Tokens expire after 1 year — regenerate and update the
+secret). If a value changed it commits `data/stats.yaml` and triggers the
+Pages deploy.
 
-It needs two things to work:
-1. **Public Profile** turned on in HTB account settings (Settings → Profile),
-   otherwise the page shows nothing to scrape and the run is a no-op.
-2. The scraper (`scripts/update-htb-stats.py`) uses Playwright to open
-   `https://app.hackthebox.com/profile/<id>` and read the stat numbers off
-   the rendered page by matching their labels (Rank, Machines, Sherlocks,
-   Challenges…). It was written without the ability to load that page from
-   the sandbox that built it, so the label patterns are a best guess —
-   **run it once locally (or via `workflow_dispatch`) and check the diff
-   before trusting the daily schedule**, and adjust the regexes near the
-   top of the script if a stat doesn't update correctly.
+| stats.yaml key | endpoint | field |
+|---|---|---|
+| machines | `/user/profile/basic/<id>` | `profile.system_owns` |
+| sherlocks | `/user/profile/progress/sherlocks/<id>` | `profile.challenge_owns.solved` |
+| challenges | `/user/profile/progress/challenges/<id>` | `profile.challenge_owns.solved` |
 
-The `season 9` row is left alone by the script (HTB season numbers/names
-change periodically) — update that one by hand when a new season starts.
-If you'd rather not run a browser-based scraper on a schedule, the
-fallback is still the old way: edit `data/stats.yaml` by hand.
+`rank`, `level` and `season 9` are NOT automated — edit them by hand.
+Local test: `HTB_API_TOKEN=... python3 scripts/update-htb-stats.py --dry-run --debug`.
+
