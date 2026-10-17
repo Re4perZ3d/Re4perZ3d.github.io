@@ -55,7 +55,6 @@ Source: Downloads\Certifss (PDF, first page rendered to PNG).
 | crtp/ | certificate.png |
 | ecpptv3/ | certificate.png |
 | ejptv3/ | certificate.png |
-| ecir/ | certificate.png |
 | ccna/ | certificate-1.png, certificate-2.png, certificate-3.png (CCNA 1, 2, 3) |
 
 The CTI certificate has no page on purpose: its card links straight to the arcX verify page.
@@ -83,3 +82,11 @@ display the page.
 | discord-bot/ | CyberSparkCTF / DiscordBadyyyy | Screenshot_1547–1553.png |
 | hello/ | CyberSparkCTF / Hello | Screenshot_1555–1562.png |
 | magic-bytes/ | CyberSparkCTF / MagicBytes | Screenshot_1542–1545.png, Screenshot_1554.png |
+
+## content/writeups/htb-support/
+Source: your own BloodHound screenshots from solving the box (uploaded directly to the conversation).
+
+| File | Shows |
+|---|---|
+| bloodhound-genericall.png | support → Shared Support Accounts → GenericAll → DC.SUPPORT.HTB |
+| bloodhound-dcsync.png | DC.SUPPORT.HTB → DCSync → SUPPORT.HTB domain |

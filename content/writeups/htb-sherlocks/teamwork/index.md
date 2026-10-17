@@ -1,4 +1,5 @@
 ---
+aliases: ["/writeups/sherlock-teamwork/"]
 title: "HTB Sherlock — TeamWork"
 date: 2025-04-10
 side: "blue"

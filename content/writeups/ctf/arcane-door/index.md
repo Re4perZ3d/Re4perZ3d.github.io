@@ -1,4 +1,5 @@
 ---
+aliases: ["/writeups/arcane-door/"]
 title: "CyberSpark CTF — ArcaneDoor"
 date: 2025-05-18
 side: "intel"

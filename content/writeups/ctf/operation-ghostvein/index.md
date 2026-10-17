@@ -1,4 +1,5 @@
 ---
+aliases: ["/writeups/operation-ghostvein/"]
 title: "Operation GhostVein: Linux DFIR"
 date: 2026-05-29
 side: "blue"

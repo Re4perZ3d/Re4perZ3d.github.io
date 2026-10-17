@@ -1,4 +1,5 @@
 ---
+aliases: ["/writeups/backdoor/"]
 title: "CyberSpark CTF — Backdoor"
 date: 2025-05-18
 side: "blue"

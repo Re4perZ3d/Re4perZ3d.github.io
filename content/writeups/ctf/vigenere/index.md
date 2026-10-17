@@ -1,4 +1,5 @@
 ---
+aliases: ["/writeups/vigenere/"]
 title: "Securinets Beginner CTF — Vigenère"
 date: 2025-11-10
 side: "purple"

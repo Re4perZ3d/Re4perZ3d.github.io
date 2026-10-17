@@ -1,4 +1,5 @@
 ---
+aliases: ["/writeups/red-penguin/"]
 title: "Securinets Beginner CTF — RedPenguin"
 date: 2025-11-10
 side: "intel"

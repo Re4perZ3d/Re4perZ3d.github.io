@@ -1,4 +1,5 @@
 ---
+aliases: ["/writeups/magic-bytes/"]
 title: "CyberSpark CTF — MagicBytes"
 date: 2025-05-18
 side: "purple"

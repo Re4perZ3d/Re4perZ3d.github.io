@@ -1,4 +1,5 @@
 ---
+aliases: ["/writeups/obfuscated/"]
 title: "Securinets Beginner CTF — Obfuscated"
 date: 2025-11-10
 side: "blue"

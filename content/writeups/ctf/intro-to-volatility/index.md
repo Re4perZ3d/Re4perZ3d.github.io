@@ -1,4 +1,5 @@
 ---
+aliases: ["/writeups/intro-to-volatility/"]
 title: "Securinets Beginner CTF — Intro to Volatility"
 date: 2025-11-10
 side: "blue"

@@ -2,7 +2,7 @@
 <p class="cmd">{{ partial "prompt.html" (printf "~/%s" .Section) }}ls -lt</p>
 <h1>{{ .Title }}</h1>
 {{ with .Content }}<div class="prose intro">{{ . }}</div>{{ end }}
-{{ with .Pages }}
+{{ with .RegularPagesRecursive }}
 <ul class="ls">{{ range . }}{{ partial "row.html" . }}{{ end }}</ul>
 {{ else }}
 <p class="empty">Empty directory. The first post lands here soon.</p>
