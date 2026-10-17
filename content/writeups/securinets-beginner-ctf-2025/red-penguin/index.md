@@ -1,5 +1,5 @@
 ---
-aliases: ["/writeups/red-penguin/"]
+aliases: ["/writeups/red-penguin/", "/writeups/ctf/red-penguin/"]
 title: "Securinets Beginner CTF — RedPenguin"
 date: 2025-11-10
 side: "intel"

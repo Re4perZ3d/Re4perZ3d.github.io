@@ -1,5 +1,5 @@
 ---
-aliases: ["/writeups/punkvania/"]
+aliases: ["/writeups/punkvania/", "/writeups/ctf/punkvania/"]
 title: "Securinets Beginner CTF — PunkVania"
 date: 2025-11-10
 side: "intel"

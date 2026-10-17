@@ -1,0 +1,34 @@
+{{ define "main" }}
+{{ $isRoot := eq .Parent.Kind "home" }}
+<p class="cmd">{{ partial "prompt.html" (printf "~/%s" .Section) }}ls -lt</p>
+<h1>{{ .Title }}</h1>
+{{ with .Content }}<div class="prose intro">{{ . }}</div>{{ end }}
+
+{{ if $isRoot }}
+  {{ with .Sections.ByTitle }}
+  <ul class="ls">
+    {{ range . }}
+    <li>
+      <a class="row" href="{{ .RelPermalink }}">
+        <span class="row-title">
+          <span class="dir-icon">dir</span> {{ .Title }}/
+        </span>
+        <span class="row-meta">
+          {{ with .Content }}{{ . | plainify | truncate 60 }}{{ end }}
+          <span class="dir-count">{{ len .RegularPagesRecursive }} {{ if eq (len .RegularPagesRecursive) 1 }}writeup{{ else }}writeups{{ end }}</span>
+        </span>
+      </a>
+    </li>
+    {{ end }}
+  </ul>
+  {{ else }}
+  <p class="empty">Empty directory. The first post lands here soon.</p>
+  {{ end }}
+{{ else }}
+  {{ with .Pages }}
+  <ul class="ls">{{ range . }}{{ partial "row.html" . }}{{ end }}</ul>
+  {{ else }}
+  <p class="empty">Empty directory. The first post lands here soon.</p>
+  {{ end }}
+{{ end }}
+{{ end }}

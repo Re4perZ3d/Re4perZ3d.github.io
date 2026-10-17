@@ -1,5 +1,5 @@
 ---
-aliases: ["/writeups/hello/"]
+aliases: ["/writeups/hello/", "/writeups/ctf/hello/"]
 title: "CyberSpark CTF — Hello"
 date: 2025-05-18
 side: "blue"

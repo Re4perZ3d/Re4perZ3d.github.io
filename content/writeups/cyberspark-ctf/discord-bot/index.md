@@ -1,5 +1,5 @@
 ---
-aliases: ["/writeups/discord-bot/"]
+aliases: ["/writeups/discord-bot/", "/writeups/ctf/discord-bot/"]
 title: "CyberSpark CTF — DiscordBadyyyy"
 date: 2025-05-18
 side: "purple"

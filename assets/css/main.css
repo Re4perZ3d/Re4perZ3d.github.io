@@ -85,6 +85,8 @@ a:hover { color: var(--purple); text-decoration: underline; text-underline-offse
 .row:hover .row-title { color: var(--cyan); }
 .row-meta { color: var(--dim); white-space: nowrap; display: flex; gap: 1rem; }
 @media (max-width: 560px) { .row { flex-direction: column; gap: .25rem; } }
+.dir-icon { display: inline-block; font-size: .7em; letter-spacing: .05em; color: var(--cyan); border: 1px solid var(--cyan); border-radius: 3px; padding: 0 .35em; margin-right: .25em; vertical-align: middle; text-transform: uppercase; }
+.dir-count { white-space: nowrap; }
 .empty { color: var(--dim); }
 
 /* headings */

@@ -1,5 +1,5 @@
 ---
-aliases: ["/writeups/solarwinds-campaign/"]
+aliases: ["/writeups/solarwinds-campaign/", "/writeups/ctf/solarwinds-campaign/"]
 title: "Securinets Beginner CTF — SolarWinds Campaign"
 date: 2025-11-10
 side: "intel"

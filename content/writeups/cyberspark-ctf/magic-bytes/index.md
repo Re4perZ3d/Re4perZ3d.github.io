@@ -1,5 +1,5 @@
 ---
-aliases: ["/writeups/magic-bytes/"]
+aliases: ["/writeups/magic-bytes/", "/writeups/ctf/magic-bytes/"]
 title: "CyberSpark CTF — MagicBytes"
 date: 2025-05-18
 side: "purple"

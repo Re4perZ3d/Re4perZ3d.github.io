@@ -1,5 +1,5 @@
 ---
-aliases: ["/writeups/arcane-door/"]
+aliases: ["/writeups/arcane-door/", "/writeups/ctf/arcane-door/"]
 title: "CyberSpark CTF — ArcaneDoor"
 date: 2025-05-18
 side: "intel"
