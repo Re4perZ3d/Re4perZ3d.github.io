@@ -55,9 +55,10 @@ Source: Downloads\Certifss (PDF, first page rendered to PNG).
 | crtp/ | certificate.png |
 | ecpptv3/ | certificate.png |
 | ejptv3/ | certificate.png |
-| ccna/ | certificate-1.png, certificate-2.png, certificate-3.png (CCNA 1, 2, 3) |
+| ecir/ | certificate.png |
+| ecthp/ | certificate.png (pending — render from Downloads\Certifss\eCTHP.pdf) |
 
-The CTI certificate has no page on purpose: its card links straight to the arcX verify page.
+CCNA 1-3 and the arcX CTI (Foundation) cert cards were removed from `data/stats.yaml` on 2026-10-18 — their images, if any, are no longer referenced.
 
 ## content/writeups/ — authored CTF challenge writeups (verbatim imports)
 Source: cloned read-only from the author's own public repos

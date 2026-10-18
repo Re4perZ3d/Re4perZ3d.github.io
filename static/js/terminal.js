@@ -49,8 +49,8 @@
         "     ███▀ ▀███     role     SOC Analyst // Purple -> Red",
         "     ███   ███     employer Raise Guard",
         "     ▀███▄███▀     study    TEK-UP (eng., grad 2028)",
-        "       ▀█▀         certs    CRTP · eCPPT · eJPT · CTI",
-        "                   htb      Prodigy · lvl 78 · 41 machines",
+        "       ▀█▀         certs    eCTHP · eCIR · CRTP · eCPPT · eJPT",
+        "                   htb      Prodigy · lvl 79 · 42 machines",
         "                   team     no!dea",
         "                   shell    type 'help'"
       ].join("\n"));

@@ -7,6 +7,8 @@ tags: ["cti", "mitre-attack", "diamond-model", "threat-intel"]
 ---
 New to Cyber Threat Intelligence, I soon learned why it matters — not just for large enterprises, but for any organisation defending against ever-evolving threats. This is my beginner's breakdown of CTI: what it is, what it's used for, its main categories, and how to read a tactical threat-intelligence report, written as someone currently studying the field.
 
+> Want more detail? The full version of this article is also live on Notion: [Cyber Threat Intel (CTI)](https://messy-ptarmigan-078.notion.site/Cyber-Threat-Intel-CTI-24158d40b23a800eb50cce9479abd932).
+
 ## What is threat intelligence?
 
 At its core, **threat intelligence** is about turning raw data into useful insight. It's the collection, analysis and interpretation of information about potential or real threats to an organisation, so security teams can make faster, wiser decisions — moving from reactive defence to proactive protection.
