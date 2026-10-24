@@ -333,3 +333,18 @@ body { background:
 .cert-fig a { display: block; cursor: zoom-in; }
 .cert-fig img { display: block; width: 100%; height: auto; }
 .cert-verify { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px dashed var(--line); }
+
+/* experience cards (home) */
+.exp-grid { display: flex; flex-direction: column; gap: .6rem; }
+.exp { border: 1px solid var(--line); border-left: 3px solid var(--line); border-radius: 8px; background: var(--panel); padding: .8rem 1rem; }
+.exp.side-blue { border-left-color: var(--blue); }
+.exp.side-purple { border-left-color: var(--purple); }
+.exp.side-red { border-left-color: var(--red); }
+.exp.side-green { border-left-color: var(--green); }
+.exp-head { display: flex; align-items: baseline; gap: 1rem; }
+.exp-head h3 { margin: 0; font-size: 1rem; }
+.exp-when { margin-left: auto; color: var(--dim); font-size: .8rem; white-space: nowrap; }
+.exp-org { color: var(--cyan); font-size: .85rem; margin: .1rem 0 .4rem; }
+.exp-bullets { margin: 0; padding-left: 1.1rem; color: var(--fg-soft); font-size: .86rem; }
+.exp-bullets li { margin: .15rem 0; }
+.row-meta .rt { color: var(--dim); }

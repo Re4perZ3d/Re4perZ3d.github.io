@@ -34,7 +34,7 @@
         <div class="seq-step" data-cmd="./run.sh">
           <p class="cmd">{{ partial "prompt.html" "~" }}<span class="typed"></span></p>
           <div class="seq-out">
-            <p class="status">[+] status: online — SOC &rarr; Purple &rarr; Red // always learning<span class="cursor">_</span></p>
+            <p class="status">[+] status: online — SOC &rarr; Purple &rarr; Red // <span id="hero-clock" class="clk">—</span><span class="cursor">_</span></p>
           </div>
         </div>
       </div>
@@ -60,6 +60,22 @@
     {{ end }}
   </dl>
   {{ with site.Params.hackthebox }}<p class="band-link"><a href="{{ . }}">full HTB profile &rarr;</a></p>{{ end }}
+</section>
+
+<section id="experience" class="band reveal" aria-labelledby="exp-h">
+  <p class="cmd" id="exp-h"><span class="p-dim">$ </span>cat ~/experience</p>
+  <div class="exp-grid">
+    {{ range hugo.Data.experience }}
+    <article class="exp side-{{ .side }}">
+      <div class="exp-head">
+        <h3>{{ .role }}</h3>
+        <span class="exp-when">{{ .when }}</span>
+      </div>
+      <p class="exp-org">{{ .org }}</p>
+      {{ with .bullets }}<ul class="exp-bullets">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
+    </article>
+    {{ end }}
+  </div>
 </section>
 
 <section id="certs" class="band reveal" aria-labelledby="certs-h">
@@ -139,5 +155,9 @@
     </div>
   </div>
 </section>
+
+<script>
+(function(){var el=document.getElementById('hero-clock');if(!el)return;function t(){var d=new Date();try{el.textContent=d.toLocaleDateString('en-GB',{weekday:'short',day:'2-digit',month:'short'})+' · '+d.toLocaleTimeString('en-GB');}catch(e){}}t();setInterval(t,1000);})();
+</script>
 
 {{ end }}

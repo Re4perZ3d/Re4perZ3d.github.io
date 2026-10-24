@@ -1,0 +1,23 @@
+# Work / involvement history — shown on the home page under "cat ~/experience".
+# side: blue (defensive) · red (offensive) · purple · green
+- role: "SOC Analyst (L1)"
+  org: "Raise Guard"
+  when: "Nov 2025 — present"
+  side: "blue"
+  bullets:
+    - "Triage and close security alerts across Microsoft Sentinel, Defender XDR, Trend Micro Vision One and FortiGate."
+    - "Write incident notes, closure emails and client-facing reports in French."
+    - "Run the attack → detect → validate loop — turning offensive practice into better detections."
+- role: "CTF Author & Tech Team"
+  org: "Securinets TEK-UP"
+  when: "2025 — present"
+  side: "purple"
+  bullets:
+    - "Author forensics and network CTF challenges for club competitions."
+    - "Run workshops and help organize events for the chapter."
+- role: "Final-Year Project (PFE)"
+  org: "ANCS — National Agency for Cyber Security"
+  when: "2025"
+  side: "green"
+  bullets:
+    - "Built an open-source SOC with Wazuh, OpenCTI and Shuffle, plus AI-assisted reporting."
