@@ -6,10 +6,13 @@
 
 {{ define "main" }}
 {{ $d := hugo.Data.deck }}
+{{ $used := slice }}
+{{ range $d.phases }}{{ range .cmds }}{{ with .tool }}{{ $used = $used | append . }}{{ end }}{{ end }}{{ end }}
+{{ $used = $used | uniq | sort }}
 <div class="deck">
   <p class="cmd">{{ partial "prompt.html" "~/deck" }}cat deck.md</p>
   <h1>{{ .Title }}</h1>
-  <p class="deck-intro">Set your target once — every command below fills itself in. Search, filter by phase or surface, click any command to copy it with your real values. <span class="warn">Authorized lab / CTF targets only.</span></p>
+  <p class="deck-intro">Set your target once — every command fills itself in. Expand a phase, or filter by tool, surface or search. Click any command to copy it with your real values. <span class="warn">Authorized lab / CTF targets only.</span></p>
 
   <div class="deck-bar">
     <div class="deck-vars">
@@ -22,12 +25,14 @@
     </div>
     <div class="deck-row">
       <div class="deck-search"><span>/</span><input id="deck-search-input" type="text" autocomplete="off" spellcheck="false" placeholder="search commands… (press / )"></div>
-      <button class="deck-btn" id="deck-tools-btn" type="button">Tools</button>
+      <select id="deck-tool-select" class="deck-select" aria-label="Filter by tool">
+        <option value="">all tools</option>
+        {{ range $used }}<option value="{{ . }}">{{ . }}</option>{{ end }}
+      </select>
+      <button class="deck-btn" id="deck-expand" type="button">expand all</button>
+      <button class="deck-btn" id="deck-tools-btn" type="button">tools ↗</button>
     </div>
-    <div class="deck-chips">
-      {{ range $d.phases }}<button class="chip phase" data-phase="{{ .id }}" type="button">{{ .name }}</button>{{ end }}
-    </div>
-    <div class="deck-chips">
+    <div class="deck-chips" id="deck-surfaces">
       <button class="chip surface s-network" data-surface="network" type="button">network</button>
       <button class="chip surface s-web" data-surface="web" type="button">web</button>
       <button class="chip surface s-linux" data-surface="linux" type="button">linux</button>
@@ -36,37 +41,45 @@
     </div>
   </div>
 
-  {{ range $d.phases }}
-  {{ $phase := . }}
-  <section class="deck-phase" data-phase="{{ .id }}" id="ph-{{ .id }}">
-    <h2><span class="ph-n">{{ .n }}</span>{{ .name }}<span class="ph-c"></span></h2>
-    {{ with .howto }}<p class="deck-howto">{{ . }}</p>{{ end }}
-    <div class="deck-grid">
-      {{ range .cmds }}
-      {{ $surf := .surface | default $phase.surface | default "network" }}
-      {{ $tool := .tool }}
-      <div class="cmd-card" data-surface="{{ $surf }}" data-tool="{{ $tool }}" data-text="{{ .lbl }} {{ .cmd }} {{ $tool }}">
-        <div class="cmd-top">
-          <span class="cmd-lbl">{{ .lbl }}</span>
-          {{ with .when }}<span class="cmd-when">{{ . }}</span>{{ end }}
-          <span class="cmd-meta">
-            {{ with $tool }}{{ $t := index $d.tools . }}<span class="badge tool"{{ with $t }} title="{{ .desc }}"{{ end }}>{{ . }}</span>{{ end }}
-            {{ if .loud }}<span class="badge loud" title="Intrusive / noisy — don't fire blindly">loud</span>{{ end }}
-            {{ with .src }}<span class="badge src">{{ . }}</span>{{ end }}
-          </span>
+  <div id="deck-phases">
+  {{ range $i, $p := $d.phases }}
+  {{ $phase := $p }}
+  <details class="deck-phase" data-phase="{{ $p.id }}" id="ph-{{ $p.id }}"{{ if eq $i 0 }} open{{ end }}>
+    <summary>
+      <span class="ph-n">{{ $p.n }}</span>
+      <span class="ph-name">{{ $p.name }}</span>
+      <span class="ph-c" data-total="{{ len $p.cmds }}">{{ len $p.cmds }}</span>
+    </summary>
+    <div class="deck-body">
+      {{ with $p.howto }}<p class="deck-howto">{{ . }}</p>{{ end }}
+      <div class="deck-grid">
+        {{ range $p.cmds }}
+        {{ $surf := .surface | default $phase.surface | default "network" }}
+        {{ $tool := .tool }}
+        <div class="cmd-card" data-surface="{{ $surf }}" data-tool="{{ $tool }}" data-text="{{ .lbl }} {{ .cmd }} {{ $tool }}">
+          <div class="cmd-top">
+            <span class="cmd-lbl">{{ .lbl }}</span>
+            {{ with .when }}<span class="cmd-when">{{ . }}</span>{{ end }}
+            <span class="cmd-meta">
+              {{ with .ref }}<a class="cmd-ref" href="{{ .url }}">↳ {{ .name }}</a>{{ end }}
+              {{ with $tool }}{{ $t := index $d.tools . }}<span class="badge tool"{{ with $t }} title="{{ .desc }}"{{ end }}>{{ . }}</span>{{ end }}
+              {{ if .loud }}<span class="badge loud" title="Intrusive / noisy — don't fire blindly">loud</span>{{ end }}
+            </span>
+          </div>
+          <div class="cmd-row">
+            <code class="cmd" data-cmd="{{ .cmd }}">{{ .cmd }}</code>
+            <button class="copy-btn" type="button">copy</button>
+          </div>
         </div>
-        <div class="cmd-row">
-          <code class="cmd" data-cmd="{{ .cmd }}">{{ .cmd }}</code>
-          <button class="copy-btn" type="button">copy</button>
-        </div>
+        {{ end }}
       </div>
-      {{ end }}
     </div>
-  </section>
+  </details>
   {{ end }}
+  </div>
 
   <p class="deck-empty" id="deck-empty" hidden>No commands match that filter.</p>
-  <p class="deck-howto" style="margin-top:2rem"><span id="deck-count"></span> commands shown · inspired by <a href="https://github.com/raytayy/pentest-deck" target="_blank" rel="noopener">raytayy/pentest-deck</a> (MIT) · commands adapted from my own notes &amp; <a href="https://github.com/seriotonctf" target="_blank" rel="noopener">seriotonctf</a>.</p>
+  <p class="deck-howto" style="margin-top:1.5rem"><span id="deck-count"></span> commands · from my own notes &amp; labs.</p>
 
   <div class="deck-modal" id="deck-tools">
     <div class="deck-modal-inner">

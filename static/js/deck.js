@@ -1,4 +1,4 @@
-/* ~/deck command deck — variable substitution, filtering, copy. No deps. */
+/* ~/deck command deck — accordion, variable substitution, filtering, copy. No deps. */
 (function () {
   "use strict";
   var deck = document.querySelector(".deck");
@@ -40,11 +40,9 @@
     }
     if (last < raw.length) codeEl.appendChild(document.createTextNode(raw.slice(last)));
   }
-  // resolved text for copying (value if set, else {{KEY}} so a blank is obvious)
   function resolve(raw) {
     return raw.replace(TOKEN, function (_, k) { return vals[k] ? vals[k] : "{{" + k + "}}"; });
   }
-
   var codes = Array.prototype.slice.call(deck.querySelectorAll("code.cmd"));
   function renderAll() { codes.forEach(fill); }
   renderAll();
@@ -71,58 +69,58 @@
     } catch (e) {}
   }
   deck.addEventListener("click", function (e) {
+    if (e.target.closest("summary")) return; // let accordion toggle
     var btn = e.target.closest(".copy-btn");
-    if (btn) { copyCard(btn.closest(".cmd-card"), btn); return; }
+    if (btn) { e.preventDefault(); copyCard(btn.closest(".cmd-card"), btn); return; }
+    if (e.target.closest(".cmd-ref")) return; // let the link navigate
     var code = e.target.closest("code.cmd");
     if (code) { copyCard(code.closest(".cmd-card"), code.closest(".cmd-card").querySelector(".copy-btn")); }
   });
 
-  // ---- filtering: phase (single) + surfaces (multi) + search ----
-  var phaseFilter = "all";
+  // ---- filtering: tool (single) + surfaces (multi) + search ----
+  var toolFilter = "";
   var surfaces = {};
   var query = "";
   var phases = Array.prototype.slice.call(deck.querySelectorAll(".deck-phase"));
+  var defaultOpen = phases.map(function (p) { return p.open; });
+
+  function filtering() {
+    return !!query || !!toolFilter || Object.keys(surfaces).some(function (s) { return surfaces[s]; });
+  }
 
   function apply() {
+    var active = filtering();
     var total = 0;
-    phases.forEach(function (ph) {
-      var id = ph.getAttribute("data-phase");
-      var phaseOK = phaseFilter === "all" || phaseFilter === id;
+    var surfList = Object.keys(surfaces).filter(function (s) { return surfaces[s]; });
+    phases.forEach(function (ph, idx) {
       var shown = 0;
       var cards = ph.querySelectorAll(".cmd-card");
       Array.prototype.forEach.call(cards, function (card) {
-        var surf = card.getAttribute("data-surface") || "";
-        var surfList = Object.keys(surfaces).filter(function (s) { return surfaces[s]; });
-        var surfOK = surfList.length === 0 || surfList.indexOf(surf) !== -1;
+        var surfOK = surfList.length === 0 || surfList.indexOf(card.getAttribute("data-surface") || "") !== -1;
+        var toolOK = !toolFilter || (card.getAttribute("data-tool") || "") === toolFilter;
         var txt = (card.getAttribute("data-text") || "").toLowerCase();
         var searchOK = !query || txt.indexOf(query) !== -1;
-        var vis = phaseOK && surfOK && searchOK;
+        var vis = surfOK && toolOK && searchOK;
         card.hidden = !vis;
         if (vis) shown++;
       });
-      ph.hidden = !phaseOK || shown === 0;
-      var c = ph.querySelector(".ph-c"); if (c) c.textContent = shown;
+      var cnt = ph.querySelector(".ph-c");
+      if (active) {
+        ph.hidden = shown === 0;
+        if (shown > 0) ph.open = true;
+        if (cnt) cnt.textContent = shown;
+      } else {
+        ph.hidden = false;
+        ph.open = defaultOpen[idx];
+        if (cnt) cnt.textContent = cnt.getAttribute("data-total");
+      }
       total += shown;
     });
-    var foot = document.getElementById("deck-count"); if (foot) foot.textContent = total;
-    var empty = document.getElementById("deck-empty"); if (empty) empty.hidden = total > 0;
+    var foot = document.getElementById("deck-count"); if (foot) foot.textContent = active ? total : codes.length;
+    var empty = document.getElementById("deck-empty"); if (empty) empty.hidden = total > 0 || !active;
+    if (expandBtn && !active) expandBtn.textContent = "expand all";
   }
 
-  // phase chips
-  Array.prototype.forEach.call(deck.querySelectorAll(".chip.phase"), function (chip) {
-    chip.addEventListener("click", function () {
-      var id = chip.getAttribute("data-phase");
-      if (phaseFilter === id) { phaseFilter = "all"; } else { phaseFilter = id; }
-      Array.prototype.forEach.call(deck.querySelectorAll(".chip.phase"), function (c) {
-        c.classList.toggle("on", c.getAttribute("data-phase") === phaseFilter);
-      });
-      apply();
-      if (phaseFilter !== "all") {
-        var ph = deck.querySelector('.deck-phase[data-phase="' + phaseFilter + '"]');
-        if (ph) ph.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    });
-  });
   // surface chips
   Array.prototype.forEach.call(deck.querySelectorAll(".chip.surface"), function (chip) {
     chip.addEventListener("click", function () {
@@ -132,13 +130,22 @@
       apply();
     });
   });
+  // tool select
+  var toolSel = document.getElementById("deck-tool-select");
+  if (toolSel) toolSel.addEventListener("change", function () { toolFilter = toolSel.value; apply(); });
   // search
   var search = document.getElementById("deck-search-input");
-  if (search) {
-    search.addEventListener("input", function () { query = search.value.trim().toLowerCase(); apply(); });
-  }
+  if (search) search.addEventListener("input", function () { query = search.value.trim().toLowerCase(); apply(); });
 
-  // ---- tools catalog modal ----
+  // expand / collapse all
+  var expandBtn = document.getElementById("deck-expand");
+  if (expandBtn) expandBtn.addEventListener("click", function () {
+    var anyClosed = phases.some(function (p) { return !p.hidden && !p.open; });
+    phases.forEach(function (p) { if (!p.hidden) p.open = anyClosed; });
+    expandBtn.textContent = anyClosed ? "collapse all" : "expand all";
+  });
+
+  // tools catalog modal
   var toolsBtn = document.getElementById("deck-tools-btn");
   var modal = document.getElementById("deck-tools");
   if (toolsBtn && modal) {
@@ -146,9 +153,9 @@
     modal.addEventListener("click", function (e) { if (e.target === modal || e.target.closest(".deck-modal-close")) modal.classList.remove("open"); });
   }
 
-  // ---- keyboard: / focus search, Esc clear/close ----
+  // keyboard: / focus search, Esc clear/close
   document.addEventListener("keydown", function (e) {
-    if (e.key === "/" && document.activeElement !== search && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) {
+    if (e.key === "/" && document.activeElement !== search && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) {
       e.preventDefault(); if (search) search.focus();
     } else if (e.key === "Escape") {
       if (modal && modal.classList.contains("open")) { modal.classList.remove("open"); return; }
