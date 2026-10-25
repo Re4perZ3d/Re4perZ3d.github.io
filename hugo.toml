@@ -14,6 +14,9 @@ enableRobotsTXT = true
   hackthebox = "https://app.hackthebox.com/users/1720033"
   email = "medbayrembane@gmail.com"
   resume = "/resume.pdf"
+  # Social dock extras — fill these in to show them in the bottom dock:
+  discord = "https://discord.com/users/375732725778481152"
+  # x = "https://x.com/yourhandle"
 
 [menus]
   [[menus.main]]

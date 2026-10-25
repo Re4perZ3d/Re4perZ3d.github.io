@@ -348,3 +348,26 @@ body { background:
 .exp-bullets { margin: 0; padding-left: 1.1rem; color: var(--fg-soft); font-size: .86rem; }
 .exp-bullets li { margin: .15rem 0; }
 .row-meta .rt { color: var(--dim); }
+
+/* experience logos (home) */
+.exp { display: flex; gap: .9rem; align-items: flex-start; }
+.exp-logo { flex: 0 0 auto; width: 46px; height: 46px; border-radius: 10px; object-fit: contain; background: #fff; padding: 4px; }
+.exp-main { flex: 1; min-width: 0; }
+.exp-role { color: var(--cyan); font-size: .85rem; margin: .1rem 0 .4rem; }
+
+/* HTB glyph on the stats band */
+.htb-ico { width: 1em; height: 1em; vertical-align: -.12em; color: var(--green); margin-left: .3rem; }
+
+/* floating social dock */
+.dock { position: fixed; left: 50%; transform: translateX(-50%); bottom: 14px; z-index: 50; display: flex; gap: .3rem; padding: .4rem .5rem; background: color-mix(in srgb, var(--panel) 86%, transparent); border: 1px solid var(--line); border-radius: 999px; backdrop-filter: blur(10px); box-shadow: 0 6px 24px rgba(0,0,0,.4); }
+.dock-i { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; color: var(--dim); transition: color .14s, background .14s, transform .14s; }
+.dock-i:hover { transform: translateY(-3px); background: color-mix(in srgb, var(--fg) 8%, transparent); }
+.dock-i.i-github:hover { color: var(--fg); }
+.dock-i.i-htb:hover { color: var(--green); }
+.dock-i.i-linkedin:hover { color: var(--blue); }
+.dock-i.i-x:hover { color: var(--fg); }
+.dock-i.i-discord:hover { color: #8a9bff; }
+.dock-i.i-email:hover { color: var(--cyan); }
+.footer { padding-bottom: 5rem; }
+@media (max-width: 620px) { .dock { gap: .1rem; padding: .35rem; } .dock-i { width: 34px; height: 34px; } }
+.band-link .htb-ico { width: 1.05em; height: 1.05em; vertical-align: -.16em; margin: 0 .15rem 0 0; }

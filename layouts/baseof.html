@@ -32,6 +32,7 @@
     {{ block "main" . }}{{ end }}
   </main>
   {{ partial "footer.html" . }}
+  {{ partial "dock.html" . }}
   <script src="{{ "js/matrix.js" | relURL }}" defer></script>
   <script src="{{ "js/terminal.js" | relURL }}" defer></script>
   <script src="{{ "js/effects.js" | relURL }}" defer></script>
