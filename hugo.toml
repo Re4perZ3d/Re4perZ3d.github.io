@@ -47,10 +47,6 @@ enableRobotsTXT = true
     name = "~/deck"
     pageRef = "/deck"
     weight = 7
-  [[menus.main]]
-    name = "~/contact"
-    url = "/#contact"
-    weight = 8
 
 [markup]
   [markup.highlight]

@@ -7,12 +7,14 @@
   if (reduce || !("IntersectionObserver" in window)) {
     reveals.forEach(function (el) { el.classList.add("shown"); });
   } else {
+    document.documentElement.classList.add("anim");
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add("shown"); io.unobserve(e.target); }
       });
     }, { threshold: 0.12 });
     reveals.forEach(function (el) { io.observe(el); });
+    setTimeout(function () { reveals.forEach(function (el) { el.classList.add("shown"); }); }, 2500);
   }
 
   // ---- stat counters ----
