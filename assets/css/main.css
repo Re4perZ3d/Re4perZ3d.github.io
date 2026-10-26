@@ -377,3 +377,37 @@ body { background:
 .footer { padding-bottom: 5rem; }
 @media (max-width: 620px) { .dock { gap: .1rem; padding: .35rem; } .dock-i { width: 34px; height: 34px; } }
 .band-link .htb-ico { width: 1.05em; height: 1.05em; vertical-align: -.16em; margin: 0 .15rem 0 0; }
+
+/* ---- page-switch veil (safe: always ends transparent, pointer-events none) ---- */
+.page-veil { position: fixed; inset: 0; z-index: 9; pointer-events: none; background: var(--bg); animation: veilOut .45s ease forwards; }
+.page-veil::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--green), transparent); box-shadow: 0 0 20px 5px rgba(158,206,106,.45); animation: veilScan .5s ease-out forwards; }
+@keyframes veilOut { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes veilScan { 0% { top: 0; opacity: 0; } 25% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .page-veil { display: none; } }
+
+/* ---- custom reticle cursor (dim purple, red center; brighter on hover) ---- */
+body { cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2728%27%20height%3D%2728%27%20viewBox%3D%270%200%2028%2028%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%230a0d12%27%20stroke-width%3D%273.6%27%20stroke-linecap%3D%27round%27%3E%3Ccircle%20cx%3D%2714%27%20cy%3D%2714%27%20r%3D%278.5%27%2F%3E%3Cpath%20d%3D%27M14%202v4M14%2022v4M2%2014h4M22%2014h4%27%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%238f7bc6%27%20stroke-width%3D%271.7%27%20stroke-linecap%3D%27round%27%3E%3Ccircle%20cx%3D%2714%27%20cy%3D%2714%27%20r%3D%278.5%27%2F%3E%3Cpath%20d%3D%27M14%202v4M14%2022v4M2%2014h4M22%2014h4%27%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2714%27%20cy%3D%2714%27%20r%3D%271.9%27%20fill%3D%27%23f7768e%27%2F%3E%3C%2Fsvg%3E") 14 14, auto; }
+a, button, [role="button"], summary, .chip, .hint, .copy-btn, .dock-i, label.term-line, .shot a { cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2728%27%20height%3D%2728%27%20viewBox%3D%270%200%2028%2028%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%230a0d12%27%20stroke-width%3D%273.6%27%20stroke-linecap%3D%27round%27%3E%3Ccircle%20cx%3D%2714%27%20cy%3D%2714%27%20r%3D%278.5%27%2F%3E%3Cpath%20d%3D%27M14%202v4M14%2022v4M2%2014h4M22%2014h4%27%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23c4a7fb%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%3E%3Ccircle%20cx%3D%2714%27%20cy%3D%2714%27%20r%3D%278.5%27%2F%3E%3Cpath%20d%3D%27M14%202v4M14%2022v4M2%2014h4M22%2014h4%27%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2714%27%20cy%3D%2714%27%20r%3D%272.1%27%20fill%3D%27%23f7768e%27%2F%3E%3C%2Fsvg%3E") 14 14, pointer; }
+input, textarea, select, code.cmd { cursor: auto; }
+@media (hover: none), (pointer: coarse) { body, a, button, summary, .chip, .hint, .copy-btn, .dock-i { cursor: auto; } }
+
+/* ---- spotlight slow breathing ---- */
+.bg-spot.on { animation: spotBreathe 7s ease-in-out infinite; }
+@keyframes spotBreathe { 0%,100% { filter: brightness(.8); } 50% { filter: brightness(1.18); } }
+
+/* ---- sparse red/purple embers inside the spotlight ---- */
+.ember-field { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.ember { position: fixed; width: 4px; height: 4px; border-radius: 50%; pointer-events: none; opacity: 0; will-change: transform, opacity; animation: emberFloat var(--dur,4s) ease-out forwards; }
+.ember.purple { background: radial-gradient(circle, #bb9af7 0%, rgba(187,154,247,0) 70%); box-shadow: 0 0 7px 1px rgba(187,154,247,.5); }
+.ember.red { background: radial-gradient(circle, #f7768e 0%, rgba(247,118,142,0) 70%); box-shadow: 0 0 7px 1px rgba(247,118,142,.55); }
+@keyframes emberFloat { 0% { transform: translate(0,0) scale(.5); opacity: 0; } 18% { opacity: .9; } 100% { transform: translate(var(--dx,0px), var(--dy,-90px)) scale(1); opacity: 0; } }
+
+/* ---- brief RGB-split glitch on page arrival (keeps the veil fade as the main transition) ---- */
+main { animation: pageGlitch .17s steps(2,end) 1; }
+@keyframes pageGlitch {
+  0% { filter: none; transform: none; }
+  30% { filter: drop-shadow(2px 0 0 rgba(247,118,142,.85)) drop-shadow(-2px 0 0 rgba(122,162,247,.85)); transform: translateX(1px); }
+  60% { filter: drop-shadow(-3px 0 0 rgba(247,118,142,.85)) drop-shadow(3px 0 0 rgba(122,162,247,.85)); transform: translateX(-1px); }
+  100% { filter: none; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) { main { animation: none; } .ember-field { display: none; } }

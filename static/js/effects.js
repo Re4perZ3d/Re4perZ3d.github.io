@@ -64,19 +64,50 @@
   var wall = document.querySelector(".bg-wallpaper");
   var spot = document.querySelector(".bg-spot");
   if (wall || spot) {
-    var root = document.documentElement, raf = 0, mx = 0, my = 0, tx = 0, ty = 0;
-    function render() {
-      raf = 0;
-      if (spot) { root.style.setProperty("--mx", mx + "px"); root.style.setProperty("--my", my + "px"); }
-      if (wall) { wall.style.transform = "scale(1.06) translate(" + tx + "px," + ty + "px)"; }
+    var root = document.documentElement;
+    // target (real cursor) vs current (eased) — the light trails the cursor
+    var tgX = window.innerWidth / 2, tgY = window.innerHeight * 0.28;
+    var curX = tgX, curY = tgY, running = false, moved = false;
+    function loop() {
+      curX += (tgX - curX) * 0.14;   // ease factor — lower = more trail
+      curY += (tgY - curY) * 0.14;
+      if (spot) { root.style.setProperty("--mx", curX + "px"); root.style.setProperty("--my", curY + "px"); }
+      if (wall) {
+        var dx = ((curX / window.innerWidth) - 0.5) * -20;
+        var dy = ((curY / window.innerHeight) - 0.5) * -20;
+        wall.style.transform = "scale(1.06) translate(" + dx + "px," + dy + "px)";
+      }
+      if (Math.abs(tgX - curX) > 0.3 || Math.abs(tgY - curY) > 0.3) {
+        requestAnimationFrame(loop);
+      } else { running = false; }
     }
+    function kick() { if (!running) { running = true; requestAnimationFrame(loop); } }
     window.addEventListener("mousemove", function (e) {
-      mx = e.clientX; my = e.clientY;
-      tx = ((e.clientX / window.innerWidth) - 0.5) * -18;
-      ty = ((e.clientY / window.innerHeight) - 0.5) * -18;
+      tgX = e.clientX; tgY = e.clientY;
       if (spot && !spot.classList.contains("on")) spot.classList.add("on");
-      if (!raf) raf = requestAnimationFrame(render);
+      kick();
     }, { passive: true });
     document.addEventListener("mouseleave", function () { if (spot) spot.classList.remove("on"); });
+
+    // ---- sparse embers escaping inside the spotlight ----
+    var field = document.createElement("div");
+    field.className = "ember-field";
+    document.body.appendChild(field);
+    var live = 0, MAX = 6;
+    function spawn() {
+      if (document.hidden || live >= MAX || !spot || !spot.classList.contains("on")) return;
+      var em = document.createElement("span");
+      em.className = "ember " + (Math.random() < 0.3 ? "red" : "purple");
+      var ox = (Math.random() - 0.5) * 120, oy = (Math.random() - 0.5) * 80;
+      em.style.left = (curX + ox) + "px";
+      em.style.top = (curY + oy) + "px";
+      em.style.setProperty("--dx", ((Math.random() - 0.5) * 50) + "px");
+      em.style.setProperty("--dy", (-70 - Math.random() * 60) + "px");
+      em.style.setProperty("--dur", (3.4 + Math.random() * 1.8) + "s");
+      live++;
+      em.addEventListener("animationend", function () { em.remove(); live--; });
+      field.appendChild(em);
+    }
+    setInterval(spawn, 760);
   }
 })();
