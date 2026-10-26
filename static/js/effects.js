@@ -58,4 +58,25 @@
     });
     hero.addEventListener("mouseleave", function () { emblem.style.transform = ""; });
   }
+
+  // ---- interactive background: a light that follows the cursor and reveals
+  //      the art beneath, plus a subtle parallax drift of the whole scene ----
+  var wall = document.querySelector(".bg-wallpaper");
+  var spot = document.querySelector(".bg-spot");
+  if (wall || spot) {
+    var root = document.documentElement, raf = 0, mx = 0, my = 0, tx = 0, ty = 0;
+    function render() {
+      raf = 0;
+      if (spot) { root.style.setProperty("--mx", mx + "px"); root.style.setProperty("--my", my + "px"); }
+      if (wall) { wall.style.transform = "scale(1.06) translate(" + tx + "px," + ty + "px)"; }
+    }
+    window.addEventListener("mousemove", function (e) {
+      mx = e.clientX; my = e.clientY;
+      tx = ((e.clientX / window.innerWidth) - 0.5) * -18;
+      ty = ((e.clientY / window.innerHeight) - 0.5) * -18;
+      if (spot && !spot.classList.contains("on")) spot.classList.add("on");
+      if (!raf) raf = requestAnimationFrame(render);
+    }, { passive: true });
+    document.addEventListener("mouseleave", function () { if (spot) spot.classList.remove("on"); });
+  }
 })();

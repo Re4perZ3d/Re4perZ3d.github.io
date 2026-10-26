@@ -258,7 +258,12 @@ html.anim .reveal.shown { opacity: 1; transform: none; }
 .bg-wallpaper { position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background: url("/img/bg-wallpaper.jpg") no-repeat center 22%;
   background-size: cover; opacity: .72; filter: saturate(1.22) contrast(1.08);
-  transform: scale(1.02); }
+  transform: scale(1.06); will-change: transform; transition: transform .25s ease-out; }
+.bg-spot { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity .45s ease;
+  background: radial-gradient(circle 420px at var(--mx, 50%) var(--my, 28%), rgba(125,207,255,.26), rgba(187,154,247,.12) 44%, transparent 70%);
+  mix-blend-mode: screen; }
+.bg-spot.on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .bg-spot { display: none; } }
 .bg-overlay { position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background:
     linear-gradient(180deg, rgba(10,13,18,.20) 0%, rgba(10,13,18,.46) 44%, var(--bg) 94%),
