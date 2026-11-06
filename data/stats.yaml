@@ -10,6 +10,7 @@ htb:
 # Certifications. `page` = slug of a page in content/certs/ (card links there).
 # Without `page`, the card links straight to the external verify URL.
 certs:
+  - { name: "eAIS",     full: "AI Systems Security Specialist",            issuer: "INE",              year: "2026", side: "purple", page: "eais" }
   - { name: "eCTHP",    full: "Certified Threat Hunting Professional",     issuer: "INE",              year: "2026", side: "intel",  page: "ecthp" }
   - { name: "eCIR",     full: "Certified Incident Responder",              issuer: "INE",              year: "2026", side: "blue",   page: "ecir" }
   - { name: "CRTP",     full: "Certified Red Team Professional",           issuer: "Altered Security", year: "2026", side: "red", page: "crtp" }

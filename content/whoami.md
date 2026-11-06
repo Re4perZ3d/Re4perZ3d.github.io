@@ -22,7 +22,7 @@ I work on both ends of an attack: I triage and investigate alerts in Microsoft S
 
 ## Certifications
 
-eCTHP · eCIR · CRTP · eCPPTv3 · eJPTv3
+eAIS · eCTHP · eCIR · CRTP · eCPPTv3 · eJPTv3
 
 ## CTF — team no!dea
 
