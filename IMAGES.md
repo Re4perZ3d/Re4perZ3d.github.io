@@ -58,6 +58,7 @@ Source: Downloads\Certifss (PDF, first page rendered to PNG).
 | ecir/ | certificate.png |
 | ecthp/ | certificate.png |
 | eais/ | certificate.png |
+| ecdfp/ | certificate.png |
 
 CCNA 1-3 and the arcX CTI (Foundation) cert cards were removed from `data/stats.yaml` on 2026-10-18 — their images, if any, are no longer referenced.
 

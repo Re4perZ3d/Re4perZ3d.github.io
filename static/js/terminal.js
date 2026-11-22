@@ -49,7 +49,7 @@
         "     ███▀ ▀███     role     SOC Analyst // Purple -> Red",
         "     ███   ███     employer Raise Guard",
         "     ▀███▄███▀     study    TEK-UP (eng., grad 2028)",
-        "       ▀█▀         certs    eAIS · eCTHP · eCIR · CRTP · eCPPT · eJPT",
+        "       ▀█▀         certs    eCDFP · eAIS · eCTHP · eCIR · CRTP · eCPPT · eJPT",
         "                   htb      Prodigy · lvl 79 · 42 machines",
         "                   team     no!dea",
         "                   shell    type 'help'"
